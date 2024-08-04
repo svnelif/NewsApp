@@ -9,23 +9,27 @@
 /* Begin PBXBuildFile section */
 		675E06852C5917EF00E5709B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 675E06842C5917EF00E5709B /* AppDelegate.swift */; };
 		675E06872C5917EF00E5709B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 675E06862C5917EF00E5709B /* SceneDelegate.swift */; };
-		675E06892C5917EF00E5709B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 675E06882C5917EF00E5709B /* ViewController.swift */; };
 		675E068C2C5917EF00E5709B /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 675E068B2C5917EF00E5709B /* Base */; };
-		675E068F2C5917EF00E5709B /* NewsApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 675E068D2C5917EF00E5709B /* NewsApp.xcdatamodeld */; };
 		675E06912C5917F200E5709B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 675E06902C5917F200E5709B /* Assets.xcassets */; };
 		675E06942C5917F200E5709B /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 675E06932C5917F200E5709B /* Base */; };
+		67799B622C6003180005AB2C /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67799B612C6003180005AB2C /* WeatherViewController.swift */; };
+		67C2EE452C5F8D9E00E6FC6D /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C2EE442C5F8D9E00E6FC6D /* NewsTableViewCell.swift */; };
+		67C2EE472C5F8DA900E6FC6D /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C2EE462C5F8DA900E6FC6D /* APICaller.swift */; };
+		67C2EE7C2C5FFDAC00E6FC6D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C2EE7B2C5FFDAC00E6FC6D /* ViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		675E06812C5917EF00E5709B /* NewsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		675E06842C5917EF00E5709B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		675E06862C5917EF00E5709B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		675E06882C5917EF00E5709B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		675E068B2C5917EF00E5709B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		675E068E2C5917EF00E5709B /* NewsApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NewsApp.xcdatamodel; sourceTree = "<group>"; };
 		675E06902C5917F200E5709B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		675E06932C5917F200E5709B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		675E06952C5917F200E5709B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		67799B612C6003180005AB2C /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
+		67C2EE442C5F8D9E00E6FC6D /* NewsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
+		67C2EE462C5F8DA900E6FC6D /* APICaller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
+		67C2EE7B2C5FFDAC00E6FC6D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,12 +64,14 @@
 			children = (
 				675E06842C5917EF00E5709B /* AppDelegate.swift */,
 				675E06862C5917EF00E5709B /* SceneDelegate.swift */,
-				675E06882C5917EF00E5709B /* ViewController.swift */,
 				675E068A2C5917EF00E5709B /* Main.storyboard */,
-				675E06902C5917F200E5709B /* Assets.xcassets */,
 				675E06922C5917F200E5709B /* LaunchScreen.storyboard */,
+				675E06902C5917F200E5709B /* Assets.xcassets */,
 				675E06952C5917F200E5709B /* Info.plist */,
-				675E068D2C5917EF00E5709B /* NewsApp.xcdatamodeld */,
+				67C2EE442C5F8D9E00E6FC6D /* NewsTableViewCell.swift */,
+				67C2EE462C5F8DA900E6FC6D /* APICaller.swift */,
+				67C2EE7B2C5FFDAC00E6FC6D /* ViewController.swift */,
+				67799B612C6003180005AB2C /* WeatherViewController.swift */,
 			);
 			path = NewsApp;
 			sourceTree = "<group>";
@@ -86,6 +92,8 @@
 			dependencies = (
 			);
 			name = NewsApp;
+			packageProductDependencies = (
+			);
 			productName = NewsApp;
 			productReference = 675E06812C5917EF00E5709B /* NewsApp.app */;
 			productType = "com.apple.product-type.application";
@@ -114,6 +122,12 @@
 				Base,
 			);
 			mainGroup = 675E06782C5917EF00E5709B;
+			packageReferences = (
+				67C2EE482C5F8DE000E6FC6D /* XCRemoteSwiftPackageReference "SideMenu" */,
+				67C2EE4B2C5FA4B800E6FC6D /* XCRemoteSwiftPackageReference "ArduinoJson" */,
+				67C2EE732C5FC53500E6FC6D /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				67C2EE742C5FC56E00E6FC6D /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = 675E06822C5917EF00E5709B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -141,9 +155,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				675E06892C5917EF00E5709B /* ViewController.swift in Sources */,
+				67C2EE7C2C5FFDAC00E6FC6D /* ViewController.swift in Sources */,
+				67799B622C6003180005AB2C /* WeatherViewController.swift in Sources */,
 				675E06852C5917EF00E5709B /* AppDelegate.swift in Sources */,
-				675E068F2C5917EF00E5709B /* NewsApp.xcdatamodeld in Sources */,
+				67C2EE452C5F8D9E00E6FC6D /* NewsTableViewCell.swift in Sources */,
+				67C2EE472C5F8DA900E6FC6D /* APICaller.swift in Sources */,
 				675E06872C5917EF00E5709B /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -304,6 +320,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -332,6 +349,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -368,18 +386,40 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCVersionGroup section */
-		675E068D2C5917EF00E5709B /* NewsApp.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				675E068E2C5917EF00E5709B /* NewsApp.xcdatamodel */,
-			);
-			currentVersion = 675E068E2C5917EF00E5709B /* NewsApp.xcdatamodel */;
-			path = NewsApp.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
+/* Begin XCRemoteSwiftPackageReference section */
+		67C2EE482C5F8DE000E6FC6D /* XCRemoteSwiftPackageReference "SideMenu" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jonkykong/SideMenu";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.5.0;
+			};
 		};
-/* End XCVersionGroup section */
+		67C2EE4B2C5FA4B800E6FC6D /* XCRemoteSwiftPackageReference "ArduinoJson" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/bblanchon/ArduinoJson";
+			requirement = {
+				branch = 7.x;
+				kind = branch;
+			};
+		};
+		67C2EE732C5FC53500E6FC6D /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.2;
+			};
+		};
+		67C2EE742C5FC56E00E6FC6D /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.9.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = 675E06792C5917EF00E5709B /* Project object */;
 }
