@@ -2,7 +2,7 @@
 //  NewsTableViewCell.swift
 //  NewsApp
 //
-//  Created by Elif Ataseven  on 2.08.2024.
+//  Created by Elif Ataseven  on 4.08.2024.
 //
 
 import UIKit
