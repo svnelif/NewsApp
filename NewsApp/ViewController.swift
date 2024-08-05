@@ -1,8 +1,9 @@
-
 import SafariServices
+import SideMenu
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, MenuListControllerDelegate{
+    
 
     // Create a tableView
     private let tableView: UITableView = {
@@ -12,34 +13,52 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }()
     
     private let searchVC = UISearchController(searchResultsController: nil)
+    private let settingsController = SettingsViewController()
     
     private var viewModels = [NewsTableViewCellViewModel]()
     private var articles = [Article]()
+    private var currentPage = 0
+    private let pageSize = 20
+    private var isFetchingData = false
+    private var hasMoreData = true
+
+    var menu: SideMenuNavigationController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "News"
         view.backgroundColor = .systemBackground
         view.addSubview(tableView)
+        
         tableView.delegate = self
         tableView.dataSource = self
+        setupMenu()
+        
         fetchTopStories()
         createSearchBar()
+        
     }
+
     
     private func fetchTopStories() {
-        APICaller.shared.getTopStories { [weak self] result in
+        guard !isFetchingData, hasMoreData else { return }
+        
+        isFetchingData = true
+        APICaller.shared.getTopStories(page: currentPage, pageSize: pageSize) { [weak self] result in
+            self?.isFetchingData = false
             switch result {
             case .success(let articles):
-                self?.articles = articles
-                self?.viewModels = articles.compactMap { article in
+                self?.articles.append(contentsOf: articles)
+                let newViewModels = articles.compactMap { article in
                     NewsTableViewCellViewModel(
-                        title: article.title,
-                        subtitle: article.description ?? "",
-                        imageURL: URL(string: article.urlToImage ?? "https://picsum.photos/200/300")
+                        title: article.name,
+                        subtitle: article.description,
+                        imageURL: URL(string: article.image)
                     )
                 }
-                // Once ViewModels are ready, table view should refresh
+                self?.viewModels.append(contentsOf: newViewModels)
+                self?.currentPage += 1
+                self?.hasMoreData = !articles.isEmpty
                 DispatchQueue.main.async {
                     self?.tableView.reloadData()
                 }
@@ -80,7 +99,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.deselectRow(at: indexPath, animated: true)
         let article = articles[indexPath.row]
         guard let urlString = article.url, let url = URL(string: urlString) else {
-            print("Invalid URL: \(article.url ?? "nil")")
+            print("Invalid URL: \(article.url)")
             return
         }
         let vc = SFSafariViewController(url: url)
@@ -88,7 +107,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
+        return 200
     }
     
     // MARK: - Search
@@ -102,9 +121,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 self?.articles = articles
                 self?.viewModels = articles.compactMap { article in
                     NewsTableViewCellViewModel(
-                        title: article.title,
-                        subtitle: article.description ?? "No Description",
-                        imageURL: URL(string: article.urlToImage ?? "https://picsum.photos/200/300")
+                        title: article.name,
+                        subtitle: article.description,
+                        imageURL: URL(string: article.image)
                     )
                 }
                 DispatchQueue.main.async {
@@ -117,8 +136,59 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
+    // MARK: - Infinite Scrolling
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.size.height
+
+        if offsetY > contentHeight - height * 2 { // *2 to trigger earlier
+            if !isFetchingData && hasMoreData {
+                fetchTopStories()
+            }
+        }
+    }
+    //Menu
     @IBAction func didNews(_ sender: Any) {
-    //    present(menu!, animated: true)
+        present(menu!, animated: true)
     }
     
+    func didSelectMenuItem(named: SideMenuItem) {
+        menu?.dismiss(animated: true, completion: { [weak self] in
+            self?.title = named.rawValue
+            var viewController: UIViewController?
+            switch named {
+            case .settings:
+                viewController = SettingsViewController()
+            }
+            if let vc = viewController {
+                vc.modalPresentationStyle = .fullScreen
+                self?.present(vc, animated: true, completion: nil)
+            }
+        })
+    }
+
+
+    private func setupMenu() {
+        
+        var menuItem = MenuListController(with: SideMenuItem.allCases)
+        menu = SideMenuNavigationController(rootViewController: menuItem)
+        
+        menuItem.delegate = self
+        menu?.leftSide = true
+        menu?.setNavigationBarHidden(true, animated: true)
+        SideMenuManager.default.leftMenuNavigationController = menu
+        SideMenuManager.default.addPanGestureToPresent(toView: self.view)
+        
+        addChildControllers()
+    }
+      
+    private func addChildControllers() {
+        addChild(settingsController)
+        view.addSubview(settingsController.view)
+        settingsController.view.frame = view.bounds
+        settingsController.didMove(toParent: self)
+        settingsController.view.isHidden = true
+    }
 }
+   

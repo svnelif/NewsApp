@@ -22,7 +22,7 @@
                     <navigationItem key="navigationItem" id="Iw2-d9-8j0">
                         <barButtonItem key="leftBarButtonItem" title="Item" image="line.3.horizontal" catalog="system" id="WYt-4T-Zmp">
                             <connections>
-                                <action selector="didNews:" destination="BYZ-38-t0r" id="4jA-xn-A7G"/>
+                                <action selector="didNews:" destination="BYZ-38-t0r" id="nYg-Zw-4XA"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

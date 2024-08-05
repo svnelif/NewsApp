@@ -1,44 +1,38 @@
-//
-//  APICaller.swift
-//  NewsApp
-//
-//  Created by Sree Sai Raghava Dandu on 13/05/21.
-//
-
 import Foundation
 
 final class APICaller {
     static let shared = APICaller()
+    
     // Struct: Constants
     struct Constants {
-
-        static let topHeadlinesURL = URL(
-             string: "https://newsapi.org/v2/top-headlines?country=in&apiKey=2fc446db28ce4ec2808fe1e4dabc0fef"
-        )
-        static let searchURLString =  "https://newsapi.org/v2/everything?sortBy=popularity&apiKey=&q=2fc446db28ce4ec2808fe1e4dabc0fef"
+        static let baseURL = "https://api.collectapi.com/news/getNews?country=tr&tag=general"
     }
+
     private init() {}
     
     // Func: getTopStories
-    public func getTopStories(completion: @escaping (Result<[Article],Error>) -> Void){
-        //Get URL (guarded)
-        guard let url = Constants.topHeadlinesURL else {
+    public func getTopStories(page: Int, pageSize: Int, completion: @escaping (Result<[Article], Error>) -> Void) {
+        let urlString = "\(Constants.baseURL)&paging=\(page)"
+        guard let url = URL(string: urlString) else {
             return
         }
-        let task = URLSession.shared.dataTask(with: url) { data, _, error in
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("apikey 2M8WkhLE9EDcBP5nu2YTBS:07mCYXY6m79lMey7pcXbm5", forHTTPHeaderField: "Authorization")
+
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
             if let error = error {
                 completion(.failure(error))
                 print(error.localizedDescription)
-            }
-            else if let data = data {
+            } else if let data = data {
                 do {
                     let result = try JSONDecoder().decode(APIResponse.self, from: data)
-                    completion(.success(result.articles))
-                    
-                }
-                catch{
+                    completion(.success(result.result))
+                } catch {
                     completion(.failure(error))
-//                    print(error.localizedDescription)
+                    print(error.localizedDescription)
                 }
             }
         }
@@ -46,46 +40,110 @@ final class APICaller {
     }
     
     // Function: searchWithText
-    public func search(with query: String, completion: @escaping (Result<[Article],Error>) -> Void){
+    func search(with query: String, completion: @escaping (Result<[Article], Error>) -> Void) {
         guard !query.trimmingCharacters(in: .whitespaces).isEmpty else {
             return
         }
-        let urlString = Constants.searchURLString + query
-        guard  let url = URL(string: urlString) else {
+        let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        let urlString = "\(Constants.baseURL)&q=\(encodedQuery)"
+        guard let url = URL(string: urlString) else {
             return
         }
-        let task = URLSession.shared.dataTask(with: url) { data, _, error in
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("apikey 2M8WkhLE9EDcBP5nu2YTBS:07mCYXY6m79lMey7pcXbm5", forHTTPHeaderField: "Authorization")
+
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
             if let error = error {
                 completion(.failure(error))
-            }
-            else if let data = data{
+                print("Error: \(error.localizedDescription)")
+            } else if let data = data {
+                if let responseString = String(data: data, encoding: .utf8) {
+                    print("Response: \(responseString)")
+                }
                 do {
                     let result = try JSONDecoder().decode(APIResponse.self, from: data)
-                    completion(.success(result.articles))
+                    completion(.success(result.result))
                 } catch {
-//                    print("Error in Response")
-                    print(error)
+                    completion(.failure(error))
+                    print("Decoding Error: \(error.localizedDescription)")
+                }
+            }
+        }
+        task.resume()
+    }
+
+
+}
+
+// Models
+struct APIResponse: Codable {
+    let success: Bool
+    let result: [Article]
+}
+
+// Article model
+struct Article: Codable {
+    let key: String
+    let url: String?
+    let description: String
+    let image: String
+    let name: String
+    let source: String
+}
+
+/*
+class NewsService {
+    private var currentPage = 1
+    private let pageSize = 20
+    private var isFetchingData = false
+    private var hasMoreData = true
+
+    struct Constants {
+        static func topHeadlinesURL(page: Int, pageSize: Int) -> URL? {
+            return URL(string: "https://api.collectapi.com/news/getNews?country=tr&tag=general&page=\(page)&pageSize=\(pageSize)")
+
+        }
+    }
+
+    func fetchTopHeadlines(completion: @escaping (Result<[Article], Error>) -> Void) {
+        guard !isFetchingData, hasMoreData else {
+            return
+        }
+
+        isFetchingData = true
+
+        guard let url = Constants.topHeadlinesURL(page: currentPage, pageSize: pageSize) else {
+            isFetchingData = false
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("apikey 2M8WkhLE9EDcBP5nu2YTBS:07mCYXY6m79lMey7pcXbm5", forHTTPHeaderField: "Authorization")
+
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            self.isFetchingData = false
+
+            if let error = error {
+                completion(.failure(error))
+                print(error.localizedDescription)
+            } else if let data = data {
+                do {
+                    let result = try JSONDecoder().decode(APIResponse.self, from: data)
+                    self.currentPage += 1
+                    self.hasMoreData = !result.result.isEmpty
+                    completion(.success(result.result))
+                } catch {
+                    completion(.failure(error))
+                    print(error.localizedDescription)
                 }
             }
         }
         task.resume()
     }
 }
-
-// Models
-struct APIResponse: Codable {
-    let articles: [Article]
-}
-
-struct Article: Codable {
-    let source: Source
-    let title: String
-    let description: String?
-    let url: String?
-    let urlToImage: String?
-    let publishedAt: String
-}
-
-struct Source: Codable {
-    let name: String
-}
+*/

@@ -16,6 +16,9 @@
 		67C2EE452C5F8D9E00E6FC6D /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C2EE442C5F8D9E00E6FC6D /* NewsTableViewCell.swift */; };
 		67C2EE472C5F8DA900E6FC6D /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C2EE462C5F8DA900E6FC6D /* APICaller.swift */; };
 		67C2EE7C2C5FFDAC00E6FC6D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C2EE7B2C5FFDAC00E6FC6D /* ViewController.swift */; };
+		67C476DF2C60B25E00CF22D7 /* SideMenu in Frameworks */ = {isa = PBXBuildFile; productRef = 67C476DE2C60B25E00CF22D7 /* SideMenu */; };
+		67C476E12C60F74C00CF22D7 /* MenuListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C476E02C60F74C00CF22D7 /* MenuListController.swift */; };
+		67C476E52C614F2700CF22D7 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C476E42C614F2700CF22D7 /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +33,8 @@
 		67C2EE442C5F8D9E00E6FC6D /* NewsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
 		67C2EE462C5F8DA900E6FC6D /* APICaller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
 		67C2EE7B2C5FFDAC00E6FC6D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		67C476E02C60F74C00CF22D7 /* MenuListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuListController.swift; sourceTree = "<group>"; };
+		67C476E42C614F2700CF22D7 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				67C476DF2C60B25E00CF22D7 /* SideMenu in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,6 +78,8 @@
 				67C2EE462C5F8DA900E6FC6D /* APICaller.swift */,
 				67C2EE7B2C5FFDAC00E6FC6D /* ViewController.swift */,
 				67799B612C6003180005AB2C /* WeatherViewController.swift */,
+				67C476E02C60F74C00CF22D7 /* MenuListController.swift */,
+				67C476E42C614F2700CF22D7 /* SettingsViewController.swift */,
 			);
 			path = NewsApp;
 			sourceTree = "<group>";
@@ -93,6 +101,7 @@
 			);
 			name = NewsApp;
 			packageProductDependencies = (
+				67C476DE2C60B25E00CF22D7 /* SideMenu */,
 			);
 			productName = NewsApp;
 			productReference = 675E06812C5917EF00E5709B /* NewsApp.app */;
@@ -123,10 +132,7 @@
 			);
 			mainGroup = 675E06782C5917EF00E5709B;
 			packageReferences = (
-				67C2EE482C5F8DE000E6FC6D /* XCRemoteSwiftPackageReference "SideMenu" */,
-				67C2EE4B2C5FA4B800E6FC6D /* XCRemoteSwiftPackageReference "ArduinoJson" */,
-				67C2EE732C5FC53500E6FC6D /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
-				67C2EE742C5FC56E00E6FC6D /* XCRemoteSwiftPackageReference "Alamofire" */,
+				67C476DD2C60B25E00CF22D7 /* XCRemoteSwiftPackageReference "SideMenu" */,
 			);
 			productRefGroup = 675E06822C5917EF00E5709B /* Products */;
 			projectDirPath = "";
@@ -160,7 +166,9 @@
 				675E06852C5917EF00E5709B /* AppDelegate.swift in Sources */,
 				67C2EE452C5F8D9E00E6FC6D /* NewsTableViewCell.swift in Sources */,
 				67C2EE472C5F8DA900E6FC6D /* APICaller.swift in Sources */,
+				67C476E12C60F74C00CF22D7 /* MenuListController.swift in Sources */,
 				675E06872C5917EF00E5709B /* SceneDelegate.swift in Sources */,
+				67C476E52C614F2700CF22D7 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,7 +328,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -349,7 +357,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -387,7 +395,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		67C2EE482C5F8DE000E6FC6D /* XCRemoteSwiftPackageReference "SideMenu" */ = {
+		67C476DD2C60B25E00CF22D7 /* XCRemoteSwiftPackageReference "SideMenu" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jonkykong/SideMenu";
 			requirement = {
@@ -395,31 +403,15 @@
 				minimumVersion = 6.5.0;
 			};
 		};
-		67C2EE4B2C5FA4B800E6FC6D /* XCRemoteSwiftPackageReference "ArduinoJson" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/bblanchon/ArduinoJson";
-			requirement = {
-				branch = 7.x;
-				kind = branch;
-			};
-		};
-		67C2EE732C5FC53500E6FC6D /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.2;
-			};
-		};
-		67C2EE742C5FC56E00E6FC6D /* XCRemoteSwiftPackageReference "Alamofire" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Alamofire/Alamofire";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.9.1;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		67C476DE2C60B25E00CF22D7 /* SideMenu */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 67C476DD2C60B25E00CF22D7 /* XCRemoteSwiftPackageReference "SideMenu" */;
+			productName = SideMenu;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 675E06792C5917EF00E5709B /* Project object */;
 }
