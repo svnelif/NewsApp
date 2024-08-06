@@ -1,0 +1,12 @@
+
+/* Class = "UITabBarItem"; title = "Weather"; ObjectID = "MNd-61-uIT"; */
+"MNd-61-uIT.title" = "Weather";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "WYt-4T-Zmp"; */
+"WYt-4T-Zmp.title" = "Item";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "d0e-fP-3kv"; */
+"d0e-fP-3kv.title" = "Item";
+
+/* Class = "UITabBarItem"; title = "News"; ObjectID = "pjB-kn-vmQ"; */
+"pjB-kn-vmQ.title" = "News";

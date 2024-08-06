@@ -2,9 +2,8 @@ import SafariServices
 import SideMenu
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, MenuListControllerDelegate{
+class NewsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, MenuListControllerDelegate {
     
-
     // Create a tableView
     private let tableView: UITableView = {
         let table = UITableView()
@@ -26,7 +25,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "News"
+        title = "News".localized
         view.backgroundColor = .systemBackground
         view.addSubview(tableView)
         
@@ -36,10 +35,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         fetchTopStories()
         createSearchBar()
-        
     }
 
-    
     private func fetchTopStories() {
         guard !isFetchingData, hasMoreData else { return }
         
@@ -68,7 +65,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
-    // MARK: - ViewDidLayoutSubviews
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.frame = view.bounds
@@ -79,7 +75,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         searchVC.searchBar.delegate = self
     }
     
-    // MARK: - TableView Delegate & DataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModels.count
     }
@@ -110,7 +105,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return 200
     }
     
-    // MARK: - Search
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let text = searchBar.text, !text.isEmpty else {
             return
@@ -136,7 +130,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
-    // MARK: - Infinite Scrolling
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
@@ -148,10 +141,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         }
     }
+    
+
     //Menu
     @IBAction func didNews(_ sender: Any) {
         present(menu!, animated: true)
     }
+    
     
     func didSelectMenuItem(named: SideMenuItem) {
         menu?.dismiss(animated: true, completion: { [weak self] in
@@ -162,15 +158,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 viewController = SettingsViewController()
             }
             if let vc = viewController {
-                vc.modalPresentationStyle = .fullScreen
                 self?.present(vc, animated: true, completion: nil)
             }
         })
     }
 
-
     private func setupMenu() {
-        
         var menuItem = MenuListController(with: SideMenuItem.allCases)
         menu = SideMenuNavigationController(rootViewController: menuItem)
         
@@ -179,16 +172,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         menu?.setNavigationBarHidden(true, animated: true)
         SideMenuManager.default.leftMenuNavigationController = menu
         SideMenuManager.default.addPanGestureToPresent(toView: self.view)
-        
-        addChildControllers()
-    }
-      
-    private func addChildControllers() {
-        addChild(settingsController)
-        view.addSubview(settingsController.view)
-        settingsController.view.frame = view.bounds
-        settingsController.didMove(toParent: self)
-        settingsController.view.isHidden = true
     }
 }
-   
+
+// Localized
+extension String {
+    var localized: String {
+        return NSLocalizedString(self, comment: "")
+    }
+}
