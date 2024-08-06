@@ -2,7 +2,7 @@ import SafariServices
 import SideMenu
 import UIKit
 
-class NewsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, MenuListControllerDelegate {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, MenuListControllerDelegate {
     
     // Create a tableView
     private let tableView: UITableView = {
@@ -151,10 +151,10 @@ class NewsViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func didSelectMenuItem(named: SideMenuItem) {
         menu?.dismiss(animated: true, completion: { [weak self] in
-            self?.title = named.rawValue
+            //self?.title = named.rawValue
             var viewController: UIViewController?
             switch named {
-            case .settings:
+            case .language:
                 viewController = SettingsViewController()
             }
             if let vc = viewController {
@@ -175,9 +175,3 @@ class NewsViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 }
 
-// Localized
-extension String {
-    var localized: String {
-        return NSLocalizedString(self, comment: "")
-    }
-}

@@ -5,7 +5,7 @@ protocol MenuListControllerDelegate: AnyObject {
 }
 
 enum SideMenuItem: String, CaseIterable{
-    case settings = "Settings"
+    case language = "Language Settings"
 }
 
 class MenuListController: UITableViewController {
@@ -43,7 +43,7 @@ class MenuListController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = menuItems[indexPath.row].rawValue
+        cell.textLabel?.text = NSLocalizedString(menuItems[indexPath.row].rawValue, comment: "")
         cell.textLabel?.textColor = .white
         cell.backgroundColor = color
         cell.contentView.backgroundColor = color

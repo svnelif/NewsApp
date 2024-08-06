@@ -5,3 +5,11 @@
   Created by Elif Ataseven  on 6.08.2024.
   
 */
+
+"News" = "Haberler";
+"Weather" = "Hava Durumu";
+"Language Settings" = "Dil Ayarları";
+"Turkish" = "Türkçe";
+"English" = "İngilizce";
+"Choose Language" = "Dil Seçiniz";
+

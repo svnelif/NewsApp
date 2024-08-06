@@ -44,14 +44,14 @@
                     <navigationItem key="navigationItem" id="Xl9-0R-GTS">
                         <barButtonItem key="leftBarButtonItem" title="Item" image="line.horizontal.3" catalog="system" id="d0e-fP-3kv">
                             <connections>
-                                <action selector="didWeather:" destination="iO5-w0-s6V" id="yQg-Of-fiE"/>
+                                <action selector="didWeather:" destination="iO5-w0-s6V" id="Gmf-Fz-pH8"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aZf-f0-07g" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="123.18840579710145" y="361.60714285714283"/>
+            <point key="canvasLocation" x="122" y="344"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="hS7-4L-jJq">
@@ -90,11 +90,11 @@
             </objects>
             <point key="canvasLocation" x="-787" y="-310"/>
         </scene>
-        <!--Waether-->
+        <!--Weather-->
         <scene sceneID="osK-6j-fha">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Eh8-pb-KBr" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Waether" image="cloud.rain.fill" catalog="system" id="MNd-61-uIT"/>
+                    <tabBarItem key="tabBarItem" title="Weather" image="cloud.rain.fill" catalog="system" id="MNd-61-uIT"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="Maj-h5-NPI">
                         <rect key="frame" x="0.0" y="48" width="414" height="96"/>
