@@ -15,6 +15,7 @@ class WeatherViewController: UIViewController, UITableViewDelegate, UITableViewD
     private var weatherData = [String]() // Example data array
     var menu: SideMenuNavigationController?
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Weather".localized

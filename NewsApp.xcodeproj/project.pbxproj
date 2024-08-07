@@ -20,6 +20,8 @@
 		67C476E12C60F74C00CF22D7 /* MenuListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C476E02C60F74C00CF22D7 /* MenuListController.swift */; };
 		67C476E52C614F2700CF22D7 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C476E42C614F2700CF22D7 /* SettingsViewController.swift */; };
 		67C477012C621F4100CF22D7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 67C476FF2C621F4100CF22D7 /* Localizable.strings */; };
+		67DA80BC2C64113700B116AD /* Weather.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 67DA80BB2C64113700B116AD /* Weather.jpg */; };
+		67DA80BE2C64126000B116AD /* Weather3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 67DA80BD2C64126000B116AD /* Weather3.jpg */; };
 		67EAF5922C626027006AD6F9 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EAF5912C626027006AD6F9 /* Localizable.swift */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +44,8 @@
 		67C477062C623F0800CF22D7 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Main.strings; sourceTree = "<group>"; };
 		67C477072C623F0800CF22D7 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		67C477082C623F1600CF22D7 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		67DA80BB2C64113700B116AD /* Weather.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Weather.jpg; sourceTree = "<group>"; };
+		67DA80BD2C64126000B116AD /* Weather3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Weather3.jpg; sourceTree = "<group>"; };
 		67EAF5912C626027006AD6F9 /* Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -88,6 +92,8 @@
 				67799B612C6003180005AB2C /* WeatherViewController.swift */,
 				67C476E02C60F74C00CF22D7 /* MenuListController.swift */,
 				67C476E42C614F2700CF22D7 /* SettingsViewController.swift */,
+				67DA80BB2C64113700B116AD /* Weather.jpg */,
+				67DA80BD2C64126000B116AD /* Weather3.jpg */,
 				67C476FF2C621F4100CF22D7 /* Localizable.strings */,
 				67EAF5912C626027006AD6F9 /* Localizable.swift */,
 			);
@@ -159,7 +165,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				67DA80BE2C64126000B116AD /* Weather3.jpg in Resources */,
 				675E06912C5917F200E5709B /* Assets.xcassets in Resources */,
+				67DA80BC2C64113700B116AD /* Weather.jpg in Resources */,
 				67C477012C621F4100CF22D7 /* Localizable.strings in Resources */,
 				675E06942C5917F200E5709B /* Base in Resources */,
 				675E068C2C5917EF00E5709B /* Base in Resources */,
