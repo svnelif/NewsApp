@@ -74,9 +74,8 @@ final class APICaller {
         }
         task.resume()
     }
-
-
 }
+
 
 // Models
 struct APIResponse: Codable {

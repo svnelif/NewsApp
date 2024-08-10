@@ -38,19 +38,8 @@
                     <view key="view" contentMode="scaleToFill" id="YAR-N3-oTj">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Weather3.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="jAK-Mu-oi7">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                            </imageView>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="BhG-m4-em5"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="jAK-Mu-oi7" firstAttribute="centerY" secondItem="YAR-N3-oTj" secondAttribute="centerY" id="Cd3-IZ-ZjQ"/>
-                            <constraint firstItem="jAK-Mu-oi7" firstAttribute="leading" secondItem="BhG-m4-em5" secondAttribute="leading" id="K98-cg-Vdd"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="jAK-Mu-oi7" secondAttribute="bottom" constant="-83" id="KXh-t8-9bn"/>
-                            <constraint firstItem="jAK-Mu-oi7" firstAttribute="centerX" secondItem="YAR-N3-oTj" secondAttribute="centerX" id="KYG-Kq-j6C"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Xl9-0R-GTS">
                         <barButtonItem key="leftBarButtonItem" title="Item" image="line.horizontal.3" catalog="system" id="d0e-fP-3kv">
@@ -59,13 +48,10 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <outlet property="imageVİew" destination="jAK-Mu-oi7" id="c30-r1-b26"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aZf-f0-07g" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="121.73913043478262" y="343.52678571428572"/>
+            <point key="canvasLocation" x="121.73913043478262" y="361.60714285714283"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="hS7-4L-jJq">
@@ -125,7 +111,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Weather3.jpg" width="910" height="1365"/>
         <image name="cloud.rain.fill" catalog="system" width="126" height="128"/>
         <image name="line.3.horizontal" catalog="system" width="128" height="65"/>
         <image name="line.horizontal.3" catalog="system" width="128" height="65"/>

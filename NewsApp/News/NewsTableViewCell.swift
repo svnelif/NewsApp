@@ -85,6 +85,7 @@ class NewsTableViewCell: UITableViewCell {
         newsImageView.image = nil
     }
     
+    
     //Configure each cell with a view Model
     func configure(with viewModel: NewsTableViewCellViewModel){
         //Configure all the data here
