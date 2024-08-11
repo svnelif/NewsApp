@@ -1,77 +1,273 @@
+import UIKit
+import CoreLocation
 import SafariServices
 import SideMenu
-import UIKit
 
-class WeatherViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MenuListControllerDelegate, UISearchBarDelegate {
-    
-    private let backgroundImageView = UIImageView()
-    private let darkOverlayView = UIView()
-    private let mainStackView = UIStackView()
-    private let statusImageView = UIImageView()
-    private let temperatureLabel = UILabel()
-    private let cityLabel = UILabel()
-    
+class WeatherViewController: UIViewController, MenuListControllerDelegate, CLLocationManagerDelegate {
+    static let identifier = "WeatherViewController"
+    @IBOutlet weak var cityLabel: UILabel!
+    @IBOutlet weak var conditionLabel: UILabel!
+    @IBOutlet weak var temperatureLabel: UILabel!
+    @IBOutlet weak var dayOfWeekLabel: UILabel!
+    @IBOutlet weak var hourlyCollectionView: UICollectionView!
+    @IBOutlet weak var dailyTableView: UITableView!
+
     private let tableView: UITableView = {
         let table = UITableView()
         table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         return table
     }()
     
-    private let searchVC = UISearchController(searchResultsController: nil)
     private let settingsController = SettingsViewController()
     
-    private var weatherData = [String]()
+    var location: Location!
+    var index = 0
+    var viewModel: WeatherViewModel? {
+        didSet {
+            guard let viewModel = viewModel else {
+                return
+            }
+            viewModel.location.observe { [unowned self] in
+                if let cityName = $0.name {
+                    self.cityLabel.text = cityName
+                }
+            }
+            viewModel.currentWeather.observe { [unowned self] in
+                self.conditionLabel.text = $0.condition
+                self.temperatureLabel.text = $0.temperatureText
+                self.dayOfWeekLabel.text = $0.dateText
+            }
+            viewModel.hourlyWeatherItems.observe { [unowned self] list in
+                self.hourlyCollectionView.reloadData()
+            }
+            viewModel.dailyWeatherItems.observe { [unowned self] list in
+                self.dailyTableView.reloadData()
+            }
+            viewModel.detailWeather.observe { [unowned self] list in
+                self.dailyTableView.reloadData()
+            }
+            viewModel.temperatureUnit.observe { [unowned self] unit in
+                self.temperatureLabel.text = viewModel.currentWeather.value?.temperatureText
+                self.dailyTableView.reloadData()
+                self.hourlyCollectionView.reloadData()
+            }
+        }
+    }
     var menu: SideMenuNavigationController?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Weather".localized
-        view.backgroundColor = .systemBackground
-        
-        setupSearchBar()
-        style()
-        layout()
-        
+        print("view did load at index \(self.index)")
+        view.backgroundColor = .systemRed
         view.addSubview(tableView)
-        tableView.delegate = self
-        tableView.dataSource = self
         setupMenu()
         
+        // Dil değişikliği bildirimlerini dinle
         NotificationCenter.default.addObserver(self, selector: #selector(handleLanguageChange), name: .languageChanged, object: nil)
+        
+        registerDailyTableViewCells()
+        self.hourlyCollectionView.dataSource = self
+        self.dailyTableView.dataSource = self
+        self.dailyTableView.delegate = self
+        self.dailyTableView.separatorStyle = .none
+        if let cityName = location?.name {
+            self.cityLabel.text = cityName
+        }
+        getWeatherData()
     }
-    
-    private func setupSearchBar() {
-        navigationItem.searchController = searchVC
-        searchVC.searchBar.delegate = self
-        searchVC.obscuresBackgroundDuringPresentation = false
-        searchVC.searchBar.placeholder = "Enter city name"
-        searchVC.searchBar.sizeToFit()
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let temperatureUnit = TemperatureUnit.shared.unit
+        if viewModel?.temperatureUnit.value != temperatureUnit {
+            viewModel?.temperatureUnit.value = temperatureUnit
+        }
+        print("view will appear as index \(self.index)")
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.frame = view.bounds
     }
+
+    @IBAction func didWeather(_ sender: Any) {
+        present(menu!, animated: true)
+    }
+
+    func didSelectMenuItem(named: SideMenuItem) {
+        menu?.dismiss(animated: true, completion: { [weak self] in
+            var viewController: UIViewController?
+            switch named {
+            case .language:
+                let settingsVC = SettingsViewController()
+                let navigationController = UINavigationController(rootViewController: settingsVC)
+                settingsVC.title = "Settings".localized
+                self?.present(navigationController, animated: true, completion: nil)
+            }
+        })
+    }
+
+    private func setupMenu() {
+        let menuItem = MenuListController(with: SideMenuItem.allCases)
+        menu = SideMenuNavigationController(rootViewController: menuItem)
+        
+        menuItem.delegate = self
+        menu?.leftSide = true
+        menu?.setNavigationBarHidden(true, animated: true)
+        SideMenuManager.default.leftMenuNavigationController = menu
+        SideMenuManager.default.addPanGestureToPresent(toView: self.view)
+    }
+
+    @objc private func handleLanguageChange() {
+        title = "Weather".localized
+        tableView.reloadData()
+    }
+    
+    private func setEmptyStringToLabels() {
+        let emptyString = ""
+        self.cityLabel.text = emptyString
+        self.conditionLabel.text = emptyString
+        self.temperatureLabel.text = emptyString
+    }
+    
+    private func registerDailyTableViewCells() {
+        let dailyTableViewCellNib = UINib(nibName: DailyTableViewCell.identifier, bundle: nil)
+        dailyTableView.register(dailyTableViewCellNib, forCellReuseIdentifier: DailyTableViewCell.identifier)
+        let detailTableViewCell = UINib(nibName: DetailTableViewCell.identifier, bundle: nil)
+        dailyTableView.register(detailTableViewCell, forCellReuseIdentifier: DetailTableViewCell.identifier)
+    }
+    
+    private func getWeatherData() {
+        print("get weather")
+        guard let location = self.location else {
+            print(LocationError.noLocationConfigured.localizedDescription)
+            return
+        }
+        self.viewModel = WeatherViewModel(location: location)
+        self.viewModel?.retrieveWeatherData()
+    }
+}
+
+extension WeatherViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel?.hourlyWeatherItems.value?.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HourlyCollectionViewCell.identifier, for: indexPath) as? HourlyCollectionViewCell else {
+            return HourlyCollectionViewCell()
+        }
+        guard let weatherItem = viewModel?.hourlyWeatherItems.value?[indexPath.row] else {
+            return HourlyCollectionViewCell()
+        }
+        cell.setWeatherData(from: weatherItem)
+        return cell
+    }
+}
+
+extension WeatherViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return DailyTableViewSection.numberOfSections
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return weatherData.count
+        guard let section = DailyTableViewSection(sectionIndex: section) else {
+            return 0
+        }
+        switch section {
+        case .daily:
+            return viewModel?.dailyWeatherItems.value?.count ?? 0
+        case .detail:
+            return viewModel?.detailWeather.value?.totalRow ?? 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = weatherData[indexPath.row]
-        return cell
+        guard let section = DailyTableViewSection(sectionIndex: indexPath.section) else {
+            return DailyTableViewCell()
+        }
+        switch section {
+        case .daily:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: DailyTableViewCell.identifier, for: indexPath) as? DailyTableViewCell,
+                let weatherItem = viewModel?.dailyWeatherItems.value?[indexPath.row] else {
+                return DailyTableViewCell()
+            }
+            cell.setWeatherData(from: weatherItem)
+            return cell
+        case .detail:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailTableViewCell.identifier, for: indexPath) as? DetailTableViewCell,
+                let weatherPair = viewModel?.detailWeather.value?.getDetailWeather(at: indexPath.row) else {
+                return DetailTableViewCell()
+            }
+            cell.setWeatherData(using: weatherPair)
+            return cell
+        }
     }
+}
+
+extension WeatherViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let section = DailyTableViewSection(sectionIndex: indexPath.section) else {
+            return DailyTableViewSection.defaultCellHeight
+        }
+        return section.cellHeight
+    }
+}
+
+extension Notification.Name {
+    static let languageChanged = Notification.Name("languageChanged")
+}
+
+
+
+
+
+
+
+
+/*
+import SafariServices
+import SideMenu
+import UIKit
+import CoreLocation
+
+class WeatherViewController: UIViewController, MenuListControllerDelegate, CLLocationManagerDelegate {
+
+    private let tableView: UITableView = {
+        let table = UITableView()
+        table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        return table
+    }()
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        // Handle cell selection
+    private let settingsController = SettingsViewController()
+    
+    var menu: SideMenuNavigationController?
+
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = "Weather".localized
+        view.backgroundColor = .systemRed
+        view.addSubview(tableView)
+        
+        setupMenu()
+        
+        
+        // Dil değişikliği bildirimlerini dinle
+        NotificationCenter.default.addObserver(self, selector: #selector(handleLanguageChange), name: .languageChanged, object: nil)
+        
+        
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.frame = view.bounds
     }
 
     @IBAction func didWeather(_ sender: Any) {
         present(menu!, animated: true)
     }
-    
+
     func didSelectMenuItem(named: SideMenuItem) {
         menu?.dismiss(animated: true, completion: { [weak self] in
             var viewController: UIViewController?
@@ -105,181 +301,4 @@ class WeatherViewController: UIViewController, UITableViewDelegate, UITableViewD
 extension Notification.Name {
     static let languageChanged = Notification.Name("languageChanged")
 }
-
-extension WeatherViewController {
-    private func style() {
-        backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
-        backgroundImageView.contentMode = .scaleAspectFill
-        backgroundImageView.image = UIImage(named: "weatherBackground") // Ensure this name matches your asset
-        
-        darkOverlayView.translatesAutoresizingMaskIntoConstraints = false
-        darkOverlayView.backgroundColor = UIColor(white: 0, alpha: 0.4)
-        
-        mainStackView.translatesAutoresizingMaskIntoConstraints = false
-        mainStackView.spacing = 16
-        mainStackView.axis = .vertical
-        mainStackView.alignment = .center
-        
-        statusImageView.translatesAutoresizingMaskIntoConstraints = false
-        statusImageView.image = UIImage(systemName: "sun.max.fill")
-        statusImageView.tintColor = .yellow
-        
-        temperatureLabel.translatesAutoresizingMaskIntoConstraints = false
-        temperatureLabel.font = UIFont.systemFont(ofSize: 100, weight: .bold)
-        temperatureLabel.attributedText = attributedText(with: "15")
-        temperatureLabel.textColor = .white
-        temperatureLabel.layer.shadowColor = UIColor.black.cgColor
-        temperatureLabel.layer.shadowRadius = 4.0
-        temperatureLabel.layer.shadowOpacity = 0.7
-        temperatureLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
-        temperatureLabel.layer.masksToBounds = false
-        
-        cityLabel.translatesAutoresizingMaskIntoConstraints = false
-        cityLabel.font = UIFont.preferredFont(forTextStyle: .title1)
-        cityLabel.text = "Ankara"
-        cityLabel.textColor = .white
-        cityLabel.layer.shadowColor = UIColor.black.cgColor
-        cityLabel.layer.shadowRadius = 4.0
-        cityLabel.layer.shadowOpacity = 0.7
-        cityLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
-        cityLabel.layer.masksToBounds = false
-        
-        // Fallback view for when the background image is not present
-        view.backgroundColor = .systemBlue
-    }
-    
-    private func layout() {
-        view.addSubview(backgroundImageView)
-        view.addSubview(darkOverlayView)
-        view.addSubview(mainStackView)
-        mainStackView.addArrangedSubview(statusImageView)
-        mainStackView.addArrangedSubview(temperatureLabel)
-        mainStackView.addArrangedSubview(cityLabel)
-        
-        NSLayoutConstraint.activate([
-            backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor),
-            backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            backgroundImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            backgroundImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            darkOverlayView.topAnchor.constraint(equalTo: view.topAnchor),
-            darkOverlayView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            darkOverlayView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            darkOverlayView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            mainStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            mainStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            
-            statusImageView.heightAnchor.constraint(equalToConstant: 85),
-            statusImageView.widthAnchor.constraint(equalToConstant: 85)
-        ])
-    }
-    
-    private func attributedText(with text: String) -> NSMutableAttributedString {
-        let attributedText = NSMutableAttributedString(string: text, attributes: [
-            .foregroundColor: UIColor.white,
-            .font: UIFont.boldSystemFont(ofSize: 100),
-            .shadow: NSShadow()
-        ])
-        attributedText.append(NSAttributedString(string: "°C", attributes: [
-            .font: UIFont.systemFont(ofSize: 60),
-            .foregroundColor: UIColor.white,
-            .shadow: NSShadow()
-        ]))
-        return attributedText
-    }
-}
-
-/*
- 
- extension WeatherViewController {
-     private func style() {
-         backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
-         backgroundImageView.contentMode = .scaleAspectFill
-         
-         locationButton.translatesAutoresizingMaskIntoConstraints = false
-         locationButton.setImage(UIImage(named: "location.circle.fill"), for: .normal)
-         locationButton.tintColor = .label
-         locationButton.layer.cornerRadius = 40 / 2
-         locationButton.contentVerticalAlignment = .fill
-         locationButton.contentHorizontalAlignment = .fill
-         
-         searchButton.translatesAutoresizingMaskIntoConstraints = false
-         searchButton.setImage(UIImage(named: "magnifyingglass"), for: .normal)
-         searchButton.tintColor = .label
-         searchButton.layer.cornerRadius = 40 / 2
-         searchButton.contentVerticalAlignment = .fill
-         searchButton.contentHorizontalAlignment = .fill
-         
-         searchTextField.translatesAutoresizingMaskIntoConstraints = false
-         searchTextField.placeholder = "Search"
-         searchTextField.font = UIFont.preferredFont(forTextStyle: .title1)
-         searchTextField.borderStyle = .roundedRect
-         searchTextField.textAlignment = .right
-         searchTextField.backgroundColor = .systemFill
-         
-         searchStackView.translatesAutoresizingMaskIntoConstraints = false
-         searchStackView.spacing = 8
-         searchStackView.axis = .horizontal
-         
-         mainStackView.translatesAutoresizingMaskIntoConstraints = false
-         mainStackView.spacing = 10
-         mainStackView.axis = .vertical
-         mainStackView.alignment = .trailing
-         
-         statusImageView.translatesAutoresizingMaskIntoConstraints = false
-         statusImageView.image = UIImage(named: "sun.max")
-         statusImageView.tintColor = .label
-         
-         temperatureLabel.translatesAutoresizingMaskIntoConstraints = false
-         temperatureLabel.font = UIFont.systemFont(ofSize: 80)
-         temperatureLabel.attributedText = attributedText(with: "15")
-         
-         cityLabel.translatesAutoresizingMaskIntoConstraints = false
-         cityLabel.font = UIFont.preferredFont(forTextStyle: .largeTitle)
-         cityLabel.text = "Ankara"
-     }
-     
-     private func layout() {
-         view.addSubview(backgroundImageView)
-         view.addSubview(mainStackView)
-         mainStackView.addArrangedSubview(searchStackView)
-         searchStackView.addArrangedSubview(locationButton)
-         searchStackView.addArrangedSubview(searchTextField)
-         searchStackView.addArrangedSubview(searchButton)
-         mainStackView.addArrangedSubview(statusImageView)
-         mainStackView.addArrangedSubview(temperatureLabel)
-         mainStackView.addArrangedSubview(cityLabel)
-         NSLayoutConstraint.activate([
-             
-             backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor),
-             backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-             view.trailingAnchor.constraint(equalTo: backgroundImageView.trailingAnchor),
-             view.bottomAnchor.constraint(equalTo: backgroundImageView.bottomAnchor),
-             
-             mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
-             mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
-             view.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor, constant: 8),
-             
-             searchStackView.widthAnchor.constraint(equalTo: mainStackView.widthAnchor),
-             locationButton.heightAnchor.constraint(equalToConstant: 40),
-             locationButton.widthAnchor.constraint(equalToConstant: 40),
-             
-             searchButton.heightAnchor.constraint(equalToConstant: 40),
-             searchButton.widthAnchor.constraint(equalToConstant: 40),
-             
-             statusImageView.heightAnchor.constraint(equalToConstant: 85),
-             statusImageView.widthAnchor.constraint(equalToConstant: 85)
-         ])
-     }
-     private func attributedText(with text: String) -> NSMutableAttributedString {
-         
-         let attributedText = NSMutableAttributedString(string: text, attributes: [.foregroundColor: UIColor.label, .font: UIFont.boldSystemFont(ofSize: 90)])
-         attributedText.append(NSAttributedString(string: "°C", attributes: [.font: UIFont.systemFont(ofSize: 50)]))
-         
-         return attributedText
-     }
- }
-
-
- */
+*/

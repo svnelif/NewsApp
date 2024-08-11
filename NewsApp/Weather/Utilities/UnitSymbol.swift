@@ -1,8 +1,10 @@
-//
-//  UnitSymbol.swift
-//  NewsApp
-//
-//  Created by Elif Ataseven  on 11.08.2024.
-//
 
 import Foundation
+
+struct UnitSymbol {
+    static let forClouds = "%"
+    static let forWindDegree = "m/s"
+    static let forPressure = "hPa"
+    static let forTemperature = "º"
+    static let forHumidity = "%"
+}
