@@ -1,3 +1,4 @@
+/*
 import UIKit
 import CoreLocation
 
@@ -8,7 +9,7 @@ class PageViewController: UIViewController {
     private var pageControl = UIPageControl()
     private var locationManager = LocationManager()
     private var cachedWeatherViewControllers = NSCache<NSNumber, WeatherViewController>()
-    private var userLocationList = [Location](){
+    private var userLocationList = [Location]{
         didSet {
             self.pageControl.numberOfPages = userLocationList.count
         }
@@ -191,3 +192,4 @@ extension PageViewController: LocationListViewDelegate {
         } while needChangeIndex <= userLocationList.count
     }
 }
+*/

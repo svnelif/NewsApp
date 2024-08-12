@@ -122,13 +122,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 }
                 DispatchQueue.main.async {
                     self?.tableView.reloadData()
-                    self?.searchVC.searchBar.resignFirstResponder()  // Dismiss keyboard after search
+                    self?.searchVC.searchBar.resignFirstResponder()  // Aramadan sonra klavyeyi gizle
                 }
             case .failure(let error):
                 print(error)
             }
         }
     }
+
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y

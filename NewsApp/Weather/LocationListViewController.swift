@@ -1,4 +1,5 @@
-import UIKit
+/*
+ import UIKit
 
 class LocationListViewController: UIViewController {
     @IBOutlet weak var locationListTableView: UITableView!
@@ -88,3 +89,4 @@ extension LocationListViewController: SearchViewDelegate {
         self.locationListTableView.reloadData()
     }
 }
+*/

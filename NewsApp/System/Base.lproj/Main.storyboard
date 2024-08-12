@@ -29,29 +29,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="123" y="-310"/>
-        </scene>
-        <!--Weather View Controller-->
-        <scene sceneID="SNP-yI-nVB">
-            <objects>
-                <viewController id="iO5-w0-s6V" customClass="WeatherViewController" customModule="NewsApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="YAR-N3-oTj">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="BhG-m4-em5"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="Xl9-0R-GTS">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="line.horizontal.3" catalog="system" id="d0e-fP-3kv">
-                            <connections>
-                                <action selector="didWeather:" destination="iO5-w0-s6V" id="Gmf-Fz-pH8"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aZf-f0-07g" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="121.73913043478262" y="361.60714285714283"/>
+            <point key="canvasLocation" x="235" y="-35"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="hS7-4L-jJq">
@@ -64,7 +42,6 @@
                     </tabBar>
                     <connections>
                         <segue destination="40n-cC-R2u" kind="relationship" relationship="viewControllers" id="fG9-81-uYH"/>
-                        <segue destination="Eh8-pb-KBr" kind="relationship" relationship="viewControllers" id="AJm-Ew-ADx"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uZX-n6-L95" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -88,32 +65,11 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EXV-hI-COP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-787" y="-310"/>
-        </scene>
-        <!--Weather-->
-        <scene sceneID="osK-6j-fha">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Eh8-pb-KBr" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Weather" image="cloud.rain.fill" catalog="system" id="MNd-61-uIT"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="Maj-h5-NPI">
-                        <rect key="frame" x="0.0" y="48" width="414" height="96"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="iO5-w0-s6V" kind="relationship" relationship="rootViewController" id="wtZ-Ep-Zsg"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hNm-IX-kPI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-786.95652173913049" y="361.60714285714283"/>
+            <point key="canvasLocation" x="-710" y="-35"/>
         </scene>
     </scenes>
     <resources>
-        <image name="cloud.rain.fill" catalog="system" width="126" height="128"/>
         <image name="line.3.horizontal" catalog="system" width="128" height="65"/>
-        <image name="line.horizontal.3" catalog="system" width="128" height="65"/>
         <image name="newspaper.fill" catalog="system" width="128" height="112"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

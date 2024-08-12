@@ -1,10 +1,3 @@
-//
-//  WeatheryManager.swift
-//  WeatheryApp
-//
-//  Created by Deimante Valunaite on 10/09/2023.
-//
-
 import Foundation
 import CoreLocation
 import Combine
@@ -12,6 +5,7 @@ import SwiftUI
 
 class WeatheryManager {
     func getCurrentWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees) async throws -> ResponseData {
+        var apiKey: String = "62836853957d7ca33cd5bb5d8436b269"
         guard let url = URL(string: "https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=\(latitude)&lon=\(longitude)&appid=\(apiKey)&units=metric") else {
             throw NSError(domain: "WeatheryManager", code: 1, userInfo: [NSLocalizedDescriptionKey: "Missing URL"])
         }

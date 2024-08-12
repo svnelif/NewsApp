@@ -10,15 +10,19 @@ final class APICaller {
 
     private init() {}
     
-    /*
-     
-     
-     */
-    
+
+    enum APIError: Error {
+        case failedToGetData
+        case invalidURL
+        case decodingError
+        case unknownError
+    }
+
     // Func: getTopStories
     public func getTopStories(page: Int, pageSize: Int, completion: @escaping (Result<[Article], Error>) -> Void) {
         let urlString = "\(Constants.baseURL)&paging=\(page)"
         guard let url = URL(string: urlString) else {
+            completion(.failure(APIError.invalidURL))
             return
         }
 
@@ -36,22 +40,29 @@ final class APICaller {
                     let result = try JSONDecoder().decode(APIResponse.self, from: data)
                     completion(.success(result.result))
                 } catch {
-                    completion(.failure(error))
+                    completion(.failure(APIError.decodingError))
                     print(error.localizedDescription)
                 }
+            } else {
+                completion(.failure(APIError.failedToGetData))
             }
         }
         task.resume()
     }
-    
+
     // Function: searchWithText
     func search(with query: String, completion: @escaping (Result<[Article], Error>) -> Void) {
         guard !query.trimmingCharacters(in: .whitespaces).isEmpty else {
+            completion(.failure(APIError.invalidURL)) // Hata yönetimi ekledik
             return
         }
+        
         let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        // Doğru API endpoint ve parametreleri kontrol edin
         let urlString = "\(Constants.baseURL)&q=\(encodedQuery)"
+        
         guard let url = URL(string: urlString) else {
+            completion(.failure(APIError.invalidURL))
             return
         }
 
@@ -65,20 +76,20 @@ final class APICaller {
                 completion(.failure(error))
                 print("Error: \(error.localizedDescription)")
             } else if let data = data {
-                if let responseString = String(data: data, encoding: .utf8) {
-                    print("Response: \(responseString)")
-                }
                 do {
                     let result = try JSONDecoder().decode(APIResponse.self, from: data)
                     completion(.success(result.result))
                 } catch {
-                    completion(.failure(error))
+                    completion(.failure(APIError.decodingError))
                     print("Decoding Error: \(error.localizedDescription)")
                 }
+            } else {
+                completion(.failure(APIError.failedToGetData))
             }
         }
         task.resume()
     }
+
 }
 
 

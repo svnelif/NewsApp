@@ -188,6 +188,7 @@ class WeatherViewModel: ObservableObject {
         storageLocation = location
         isLoading = true
         let apiService = APIService.shared
+        var apiKey: String = "62836853957d7ca33cd5bb5d8436b269"
         CLGeocoder().geocodeAddressString(location) { (placemarks, error) in
             if let error = error as? CLError {
                 switch error.code {
