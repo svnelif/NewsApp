@@ -1,14 +1,13 @@
-/* 
-  Localizable.strings
-  NewsApp
-
-  Created by Elif Ataseven  on 6.08.2024.
-  
-*/
-
 "News" = "Haberler";
 "Language Settings" = "Dil Ayarları";
 "Turkish" = "Türkçe";
 "English" = "İngilizce";
 "Choose Language" = "Dil Seçiniz";
 "Enter city name" = "Şehrin ismini giriniz";
+"For one euro currency." = "Bir euro birimi için.";
+"Currency" = "Döviz";
+"Get Rates" = "Fiyat al";
+"Error" = "Hata";
+"OK" = "Tamam";
+"Error!" = "Hata!";
+"Weather" = "Hava Durumu";

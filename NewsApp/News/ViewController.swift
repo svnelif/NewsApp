@@ -35,6 +35,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         fetchTopStories()
         createSearchBar()
+        
+        tabBarController?.tabBar.items?[0].title = "News".localized
+        tabBarController?.tabBar.items?[1].title = "Currency".localized
+        tabBarController?.tabBar.items?[2].title = "Weather".localized
     }
 
     private func fetchTopStories() {
