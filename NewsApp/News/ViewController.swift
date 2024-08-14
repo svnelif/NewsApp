@@ -110,12 +110,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
         guard let text = searchBar.text, !text.isEmpty else {
             return
         }
+        
+        // Klavyeyi kapat
+        searchBar.resignFirstResponder()
+        
         APICaller.shared.search(with: text) { [weak self] result in
             switch result {
             case .success(let articles):
+                print("Dönen Articles: \(articles)")
+                
                 self?.articles = articles
                 self?.viewModels = articles.compactMap { article in
                     NewsTableViewCellViewModel(
@@ -126,28 +133,26 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 }
                 DispatchQueue.main.async {
                     self?.tableView.reloadData()
-                    self?.searchVC.searchBar.resignFirstResponder()  // Aramadan sonra klavyeyi gizle
                 }
             case .failure(let error):
-                print(error)
+                print("API arama hatası: \(error.localizedDescription)")
             }
         }
     }
 
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         let height = scrollView.frame.size.height
 
-        if offsetY > contentHeight - height * 2 { // *2 to trigger earlier
+        if offsetY > contentHeight - height * 2 {
             if !isFetchingData && hasMoreData {
                 fetchTopStories()
             }
         }
     }
     
-
+    
     //Menu
     @IBAction func didNews(_ sender: Any) {
         present(menu!, animated: true)
@@ -156,7 +161,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func didSelectMenuItem(named: SideMenuItem) {
         menu?.dismiss(animated: true, completion: { [weak self] in
-            //self?.title = named.rawValue
             var viewController: UIViewController?
             switch named {
             case .language:
@@ -179,4 +183,3 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         SideMenuManager.default.addPanGestureToPresent(toView: self.view)
     }
 }
-
