@@ -1,12 +1,5 @@
-//
-//  WeatherTableViewCell.swift
-//  NewsApp
-//
-//  Created by Elif Ataseven  on 14.08.2024.
-//
-
 import UIKit
-
+/*
 class WeatherTableViewCell: UITableViewCell {
 
     @IBOutlet weak var weatherImageView: UIImageView!
@@ -28,3 +21,4 @@ class WeatherTableViewCell: UITableViewCell {
     }
 
 }
+*/

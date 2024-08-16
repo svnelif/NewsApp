@@ -1,8 +1,36 @@
 import UIKit
 import SideMenu
 
-class WeatherViewController: UIViewController, MenuListControllerDelegate, UISearchBarDelegate {
+class WeatherViewController: UIViewController, MenuListControllerDelegate, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
+    
+    @IBOutlet var table = UITableView!
+    
+    var models = [Weather]()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        
+        table.delegate = self
+        table.dataSource = self
+    }
+    
+    //Table
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return models.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()
+    }
+    
+}
 
+struct Weather {
+    
+    
+}
+    /*
     
     @IBOutlet weak var weatherTableView: UITableView!
     
@@ -24,12 +52,14 @@ class WeatherViewController: UIViewController, MenuListControllerDelegate, UISea
         return searchBar
     }()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Weather".localized
         setupMenu()
         setupSearchBar()
         fetchWeatherData()
+        setupTableView()
         
         view.addSubview(weatherLabel)
            
@@ -39,6 +69,10 @@ class WeatherViewController: UIViewController, MenuListControllerDelegate, UISea
                weatherLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
                weatherLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
            ])
+    }
+    func setupTableView() {
+        weatherTableView.register(UINib(nibName: "WeatherTableViewCell", bundle: nil), forCellReuseIdentifier: "WeatherCell")
+        weatherTableView.separatorStyle = .none // Hücreler arasında çizgi göstermemek için
     }
     
     func fetchWeatherData() {
@@ -184,3 +218,4 @@ extension WeatherViewController: UITableViewDataSource {
     }
 }
 
+*/
