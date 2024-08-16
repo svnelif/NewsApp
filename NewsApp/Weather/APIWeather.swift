@@ -1,5 +1,5 @@
 import Foundation
-
+/*
 final class APIWeather {
     static let shared = APIWeather()
     
@@ -84,3 +84,4 @@ struct Weather: Codable {
     let night: String
     let humidity: String
 }
+*/

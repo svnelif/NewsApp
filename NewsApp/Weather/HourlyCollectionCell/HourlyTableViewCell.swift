@@ -20,4 +20,10 @@ class HourlyTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    static let identifier = "HourlyTableViewCell"
+    static func nib() -> UINib {
+        return UINib(nibName: "HourlyTableViewCell",
+                     bundle: nil)
+    }
 }
+

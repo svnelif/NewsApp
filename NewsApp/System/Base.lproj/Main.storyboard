@@ -169,45 +169,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UvK-cU-jXE">
-                                <rect key="frame" x="87" y="165" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date: " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y6X-fR-vhe">
-                                <rect key="frame" x="87" y="331" width="240" height="47"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Degree:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ouW-iO-Jkp">
-                                <rect key="frame" x="87" y="386" width="240" height="47"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mSp-RR-wYW">
-                                <rect key="frame" x="87" y="441" width="240" height="47"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="PMb-SG-hF1">
-                                <rect key="frame" x="87" y="496" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="PMb-SG-hF1">
+                                <rect key="frame" x="0.0" y="144" width="414" height="752"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="XC2-w7-bv8"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <connections>
-                            <outlet property="dateLabel" destination="Y6X-fR-vhe" id="bR0-Sm-ZFi"/>
-                            <outlet property="degreeLabel" destination="ouW-iO-Jkp" id="i6Z-Mk-sKW"/>
-                            <outlet property="descriptionLabel" destination="mSp-RR-wYW" id="B9P-t9-YgI"/>
-                            <outlet property="weatherImageView" destination="UvK-cU-jXE" id="fwZ-lB-yCV"/>
-                        </connections>
+                        <constraints>
+                            <constraint firstAttribute="bottomMargin" secondItem="PMb-SG-hF1" secondAttribute="bottom" constant="-83" id="Gzr-Rc-gfT"/>
+                            <constraint firstItem="PMb-SG-hF1" firstAttribute="centerX" secondItem="fgQ-y1-ebE" secondAttribute="centerX" id="J2b-pE-axs"/>
+                            <constraint firstItem="PMb-SG-hF1" firstAttribute="top" secondItem="XC2-w7-bv8" secondAttribute="top" id="fv3-VO-wuE"/>
+                            <constraint firstItem="PMb-SG-hF1" firstAttribute="leading" secondItem="XC2-w7-bv8" secondAttribute="leading" id="h7U-e6-E0h"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ghX-SP-O0U">
                         <barButtonItem key="leftBarButtonItem" title="Item" image="line.horizontal.3" catalog="system" id="v8M-4h-Y1D">
@@ -217,7 +191,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="weatherTableView" destination="PMb-SG-hF1" id="PbF-IL-3Yz"/>
+                        <outlet property="table" destination="PMb-SG-hF1" id="2ce-9y-7ON"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GHj-g6-hyJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

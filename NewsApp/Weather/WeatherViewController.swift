@@ -1,19 +1,62 @@
 import UIKit
 import SideMenu
+import CoreLocation
 
-class WeatherViewController: UIViewController, MenuListControllerDelegate, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
+class WeatherViewController: UIViewController, MenuListControllerDelegate, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
     
-    @IBOutlet var table = UITableView!
-    
+    @IBOutlet var table: UITableView!
     var models = [Weather]()
+    let locationManager = CLLocationManager()
+    
+    var currentLocation: CLLocation?
+    
+    //Menu
+    var menu: SideMenuNavigationController?
+    private let searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.placeholder = "Enter city name"
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        return searchBar
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Register 2 cells
+        table.register(HourlyTableViewCell.nib(), forCellReuseIdentifier: HourlyTableViewCell.identifier)
+        table.register(WeatherTableViewCell.nib(), forCellReuseIdentifier: WeatherTableViewCell.identifier)
         
         table.delegate = self
         table.dataSource = self
+        
+        setupMenu()
+        setupLocation()
+        setupSearchBar()
     }
+    //Location
+    func setupLocation() {
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization() //Konum erişim izni
+        locationManager.startUpdatingLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if locations.isEmpty, currentLocation == nil {
+            currentLocation = locations.first
+            locationManager.stopUpdatingLocation()
+            requestWeatherForLocation()
+        }
+    }
+    func requestWeatherForLocation() {
+        guard let currentLocation = currentLocation else {
+            return
+        }
+        let long = currentLocation.coordinate.longitude
+        let lat = currentLocation.coordinate.latitude
+        
+        print("\(long) | \(lat)")
+    }
+    
     
     //Table
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -22,6 +65,49 @@ class WeatherViewController: UIViewController, MenuListControllerDelegate, UISea
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return UITableViewCell()
+    }
+    
+    // Menu
+    func setupMenu() {
+        var menuItem = MenuListController(with: SideMenuItem.allCases)
+        menu = SideMenuNavigationController(rootViewController: menuItem)
+        
+        menuItem.delegate = self
+        menu?.leftSide = true
+        menu?.setNavigationBarHidden(true, animated: true)
+        SideMenuManager.default.leftMenuNavigationController = menu
+        SideMenuManager.default.addPanGestureToPresent(toView: self.view)
+    }
+    
+    func didSelectMenuItem(named: SideMenuItem) {
+        menu?.dismiss(animated: true, completion: { [weak self] in
+            //self?.title = named.rawValue
+            var viewController: UIViewController?
+            switch named {
+            case .language:
+                viewController = SettingsViewController()
+            }
+            if let vc = viewController {
+                self?.present(vc, animated: true, completion: nil)
+            }
+        })
+    }
+    
+    @IBAction func didWeather(_ sender: Any) {
+        present(menu!, animated: true)
+    }
+    
+    //Search Bar
+    func setupSearchBar() {
+        view.addSubview(searchBar)
+        searchBar.delegate = self
+        
+        // Layout constraints
+        NSLayoutConstraint.activate([
+            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
     }
     
 }
