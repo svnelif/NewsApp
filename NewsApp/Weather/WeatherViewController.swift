@@ -5,7 +5,7 @@ import CoreLocation
 class WeatherViewController: UIViewController, MenuListControllerDelegate, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
     
     @IBOutlet var table: UITableView!
-    var models = [Weather]()
+    var models = [DailyWeather]()
     let locationManager = CLLocationManager()
     
     var currentLocation: CLLocation?
@@ -32,6 +32,7 @@ class WeatherViewController: UIViewController, MenuListControllerDelegate, UISea
         setupMenu()
         setupLocation()
         setupSearchBar()
+        requestWeatherForLocation()
     }
     //Location
     func setupLocation() {
@@ -47,6 +48,7 @@ class WeatherViewController: UIViewController, MenuListControllerDelegate, UISea
             requestWeatherForLocation()
         }
     }
+    
     func requestWeatherForLocation() {
         guard let currentLocation = currentLocation else {
             return
@@ -54,7 +56,35 @@ class WeatherViewController: UIViewController, MenuListControllerDelegate, UISea
         let long = currentLocation.coordinate.longitude
         let lat = currentLocation.coordinate.latitude
         
-        print("\(long) | \(lat)")
+        let apiKey = "62836853957d7ca33cd5bb5d8436b269"
+        let url = "https://api.openweathermap.org/data/3.0/onecall?lat=\(lat)&lon=\(long)&exclude={part}&appid=\(apiKey)"
+        
+        URLSession.shared.dataTask(with: URL(string: url)! , completionHandler: { data, response, error in
+            //Validation
+            guard let data = data, error == nil else {
+                print("Something went wrong.")
+                return
+            }
+            //Convert data to models/Some object
+            var json: WeatherResponse?
+            do {
+                json = try JSONDecoder().decode(WeatherResponse.self, from: data)
+                
+            }
+            catch{
+                print("Error: \(error)")
+            }
+            guard let result = json else {
+                return
+            }
+            let entries = result.daily
+            self.models.append(contentsOf: entries)
+            
+            //Update user interface
+            DispatchQueue.main.async {
+                self.table.reloadData()
+            }
+        }).resume()
     }
     
     
@@ -112,10 +142,153 @@ class WeatherViewController: UIViewController, MenuListControllerDelegate, UISea
     
 }
 
-struct Weather {
+struct WeatherResponse: Codable {
+    let lat: Double
+    let lon: Double
+    let timezone: String
+    let timezoneOffset: Int
+    let current: CurrentWeather
+    let minutely: [MinutelyWeather]
+    let hourly: [HourlyWeather]
+    let daily: [DailyWeather]
+    let alerts: [WeatherAlert]?
     
-    
+    enum CodingKeys: String, CodingKey {
+        case lat, lon, timezone, current, minutely, hourly, daily, alerts
+        case timezoneOffset = "timezone_offset"
+    }
 }
+
+struct CurrentWeather: Codable {
+    let dt: Int
+    let sunrise: Int
+    let sunset: Int
+    let temp: Double
+    let feelsLike: Double
+    let pressure: Int
+    let humidity: Int
+    let dewPoint: Double
+    let uvi: Double
+    let clouds: Int
+    let visibility: Int
+    let windSpeed: Double
+    let windDeg: Int
+    let windGust: Double
+    let weather: [WeatherDescription]
+    
+    enum CodingKeys: String, CodingKey {
+        case dt, sunrise, sunset, temp, pressure, humidity, clouds, visibility, weather
+        case feelsLike = "feels_like"
+        case dewPoint = "dew_point"
+        case uvi
+        case windSpeed = "wind_speed"
+        case windDeg = "wind_deg"
+        case windGust = "wind_gust"
+    }
+}
+
+struct MinutelyWeather: Codable {
+    let dt: Int
+    let precipitation: Double
+}
+
+struct HourlyWeather: Codable {
+    let dt: Int
+    let temp: Double
+    let feelsLike: Double
+    let pressure: Int
+    let humidity: Int
+    let dewPoint: Double
+    let uvi: Double
+    let clouds: Int
+    let visibility: Int
+    let windSpeed: Double
+    let windDeg: Int
+    let windGust: Double
+    let weather: [WeatherDescription]
+    let pop: Double
+    
+    enum CodingKeys: String, CodingKey {
+        case dt, temp, pressure, humidity, clouds, visibility, weather, pop
+        case feelsLike = "feels_like"
+        case dewPoint = "dew_point"
+        case uvi
+        case windSpeed = "wind_speed"
+        case windDeg = "wind_deg"
+        case windGust = "wind_gust"
+    }
+}
+
+struct DailyWeather: Codable {
+    let dt: Int
+    let sunrise: Int
+    let sunset: Int
+    let moonrise: Int
+    let moonset: Int
+    let moonPhase: Double
+    let summary: String
+    let temp: Temperature
+    let feelsLike: FeelsLikeTemperature
+    let pressure: Int
+    let humidity: Int
+    let dewPoint: Double
+    let windSpeed: Double
+    let windDeg: Int
+    let windGust: Double
+    let weather: [WeatherDescription]
+    let clouds: Int
+    let pop: Double
+    let rain: Double?
+    let uvi: Double
+    
+    enum CodingKeys: String, CodingKey {
+        case dt, sunrise, sunset, moonrise, moonset, summary, temp, pressure, humidity, clouds, weather, pop, rain, uvi
+        case moonPhase = "moon_phase"
+        case dewPoint = "dew_point"
+        case windSpeed = "wind_speed"
+        case windDeg = "wind_deg"
+        case windGust = "wind_gust"
+        case feelsLike = "feels_like"
+    }
+}
+
+struct Temperature: Codable {
+    let day: Double
+    let min: Double
+    let max: Double
+    let night: Double
+    let eve: Double
+    let morn: Double
+}
+
+struct FeelsLikeTemperature: Codable {
+    let day: Double
+    let night: Double
+    let eve: Double
+    let morn: Double
+}
+
+struct WeatherDescription: Codable {
+    let id: Int
+    let main: String
+    let description: String
+    let icon: String
+}
+
+struct WeatherAlert: Codable {
+    let senderName: String
+    let event: String
+    let start: Int
+    let end: Int
+    let description: String
+    let tags: [String]
+    
+    enum CodingKeys: String, CodingKey {
+        case senderName = "sender_name"
+        case event, start, end, description, tags
+    }
+}
+
     /*
     
     @IBOutlet weak var weatherTableView: UITableView!
