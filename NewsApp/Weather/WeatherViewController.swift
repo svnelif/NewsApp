@@ -22,6 +22,8 @@ class WeatherViewController: UIViewController, MenuListControllerDelegate, UISea
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Weather"
+        
         //Register 2 cells
         table.register(HourlyTableViewCell.nib(), forCellReuseIdentifier: HourlyTableViewCell.identifier)
         table.register(WeatherTableViewCell.nib(), forCellReuseIdentifier: WeatherTableViewCell.identifier)
@@ -94,7 +96,9 @@ class WeatherViewController: UIViewController, MenuListControllerDelegate, UISea
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: WeatherTableViewCell.identifier, for: indexPath) as! WeatherTableViewCell
+        cell.configure(with: models[indexPath.row])
+        return cell
     }
     
     // Menu
