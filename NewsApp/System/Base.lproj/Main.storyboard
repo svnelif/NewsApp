@@ -177,10 +177,10 @@
                         <viewLayoutGuide key="safeArea" id="XC2-w7-bv8"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="bottomMargin" secondItem="PMb-SG-hF1" secondAttribute="bottom" constant="-83" id="Gzr-Rc-gfT"/>
-                            <constraint firstItem="PMb-SG-hF1" firstAttribute="centerX" secondItem="fgQ-y1-ebE" secondAttribute="centerX" id="J2b-pE-axs"/>
-                            <constraint firstItem="PMb-SG-hF1" firstAttribute="top" secondItem="XC2-w7-bv8" secondAttribute="top" id="fv3-VO-wuE"/>
-                            <constraint firstItem="PMb-SG-hF1" firstAttribute="leading" secondItem="XC2-w7-bv8" secondAttribute="leading" id="h7U-e6-E0h"/>
+                            <constraint firstItem="PMb-SG-hF1" firstAttribute="top" secondItem="XC2-w7-bv8" secondAttribute="top" id="06S-5w-qx0"/>
+                            <constraint firstAttribute="bottom" secondItem="PMb-SG-hF1" secondAttribute="bottom" id="CJl-UI-cCb"/>
+                            <constraint firstItem="PMb-SG-hF1" firstAttribute="leading" secondItem="XC2-w7-bv8" secondAttribute="leading" id="NMJ-TP-snl"/>
+                            <constraint firstItem="PMb-SG-hF1" firstAttribute="trailing" secondItem="XC2-w7-bv8" secondAttribute="trailing" id="OTM-fS-9R4"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ghX-SP-O0U">

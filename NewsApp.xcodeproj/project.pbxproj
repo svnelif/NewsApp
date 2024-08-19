@@ -23,6 +23,9 @@
 		67C476E52C614F2700CF22D7 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C476E42C614F2700CF22D7 /* SettingsViewController.swift */; };
 		67C477012C621F4100CF22D7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 67C476FF2C621F4100CF22D7 /* Localizable.strings */; };
 		67EAF5922C626027006AD6F9 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EAF5912C626027006AD6F9 /* Localizable.swift */; };
+		67EFE9252C7326A600259666 /* WeatherCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EFE9232C7326A600259666 /* WeatherCollectionViewCell.swift */; };
+		67EFE9262C7326A600259666 /* WeatherCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67EFE9242C7326A600259666 /* WeatherCollectionViewCell.xib */; };
+		67EFE9292C735F8C00259666 /* WeatherResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EFE9282C735F8C00259666 /* WeatherResponse.swift */; };
 		67F341DF2C6D4BB5004A0907 /* WeatherTableViewCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F341DE2C6D4BB5004A0907 /* WeatherTableViewCell2.swift */; };
 		67F341E42C6F94F5004A0907 /* WeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F341E22C6F94F5004A0907 /* WeatherTableViewCell.swift */; };
 		67F341E52C6F94F5004A0907 /* WeatherTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67F341E32C6F94F5004A0907 /* WeatherTableViewCell.xib */; };
@@ -52,6 +55,9 @@
 		67C477072C623F0800CF22D7 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		67C477082C623F1600CF22D7 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		67EAF5912C626027006AD6F9 /* Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
+		67EFE9232C7326A600259666 /* WeatherCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCollectionViewCell.swift; sourceTree = "<group>"; };
+		67EFE9242C7326A600259666 /* WeatherCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeatherCollectionViewCell.xib; sourceTree = "<group>"; };
+		67EFE9282C735F8C00259666 /* WeatherResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherResponse.swift; sourceTree = "<group>"; };
 		67F341DE2C6D4BB5004A0907 /* WeatherTableViewCell2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTableViewCell2.swift; sourceTree = "<group>"; };
 		67F341E22C6F94F5004A0907 /* WeatherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTableViewCell.swift; sourceTree = "<group>"; };
 		67F341E32C6F94F5004A0907 /* WeatherTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeatherTableViewCell.xib; sourceTree = "<group>"; };
@@ -123,6 +129,8 @@
 		67967F052C6B99BB006A80A3 /* Weather */ = {
 			isa = PBXGroup;
 			children = (
+				67EFE9272C735F6C00259666 /* Models */,
+				67EFE9222C73265600259666 /* CollectionViewCell */,
 				67967F062C6B99D9006A80A3 /* WeatherViewController.swift */,
 				67F341E12C6F94BC004A0907 /* HourlyCollectionCell */,
 				67F341E02C6F94A0004A0907 /* WeatherCell */,
@@ -151,6 +159,23 @@
 				67C2EE462C5F8DA900E6FC6D /* APICaller.swift */,
 			);
 			path = News;
+			sourceTree = "<group>";
+		};
+		67EFE9222C73265600259666 /* CollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				67EFE9232C7326A600259666 /* WeatherCollectionViewCell.swift */,
+				67EFE9242C7326A600259666 /* WeatherCollectionViewCell.xib */,
+			);
+			path = CollectionViewCell;
+			sourceTree = "<group>";
+		};
+		67EFE9272C735F6C00259666 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				67EFE9282C735F8C00259666 /* WeatherResponse.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		67F341E02C6F94A0004A0907 /* WeatherCell */ = {
@@ -221,6 +246,8 @@
 			mainGroup = 675E06782C5917EF00E5709B;
 			packageReferences = (
 				67C476DD2C60B25E00CF22D7 /* XCRemoteSwiftPackageReference "SideMenu" */,
+				67EFE93A2C736A9400259666 /* XCRemoteSwiftPackageReference "swift-numerics" */,
+				67EFE9412C736B5000259666 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = 675E06822C5917EF00E5709B /* Products */;
 			projectDirPath = "";
@@ -239,6 +266,7 @@
 				67F341E92C6F953A004A0907 /* HourlyTableViewCell.xib in Resources */,
 				675E06912C5917F200E5709B /* Assets.xcassets in Resources */,
 				67C477012C621F4100CF22D7 /* Localizable.strings in Resources */,
+				67EFE9262C7326A600259666 /* WeatherCollectionViewCell.xib in Resources */,
 				67F341E52C6F94F5004A0907 /* WeatherTableViewCell.xib in Resources */,
 				675E06942C5917F200E5709B /* Base in Resources */,
 				675E068C2C5917EF00E5709B /* Base in Resources */,
@@ -252,6 +280,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				67EFE9252C7326A600259666 /* WeatherCollectionViewCell.swift in Sources */,
 				67F341DF2C6D4BB5004A0907 /* WeatherTableViewCell2.swift in Sources */,
 				67C2EE7C2C5FFDAC00E6FC6D /* ViewController.swift in Sources */,
 				67967F072C6B99D9006A80A3 /* WeatherViewController.swift in Sources */,
@@ -266,6 +295,7 @@
 				67F341E42C6F94F5004A0907 /* WeatherTableViewCell.swift in Sources */,
 				67F341E82C6F953A004A0907 /* HourlyTableViewCell.swift in Sources */,
 				67967F092C6B9E3C006A80A3 /* APIWeather.swift in Sources */,
+				67EFE9292C735F8C00259666 /* WeatherResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -520,6 +550,22 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 6.5.0;
+			};
+		};
+		67EFE93A2C736A9400259666 /* XCRemoteSwiftPackageReference "swift-numerics" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-numerics.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.2;
+			};
+		};
+		67EFE9412C736B5000259666 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift";
+			requirement = {
+				branch = master;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

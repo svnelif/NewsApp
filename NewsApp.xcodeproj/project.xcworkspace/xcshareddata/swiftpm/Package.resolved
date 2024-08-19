@@ -1,6 +1,24 @@
 {
-  "originHash" : "4dd7f122cdde79d44788d949aff0dfca8371116e12e73a2fb6ee8375212a98b7",
+  "originHash" : "4377a7b8874bc2a48d2eef19a65067185a4cc4f644d0c29a594d7d11cff5cd2c",
   "pins" : [
+    {
+      "identity" : "realm-core",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/realm/realm-core.git",
+      "state" : {
+        "revision" : "c2552e1d36867cb42b28130e894a81fc17081062",
+        "version" : "14.12.0"
+      }
+    },
+    {
+      "identity" : "realm-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/realm/realm-swift",
+      "state" : {
+        "branch" : "master",
+        "revision" : "39e62e504ef5be53fd81015c35cfef8e848b8bec"
+      }
+    },
     {
       "identity" : "sidemenu",
       "kind" : "remoteSourceControl",
@@ -8,6 +26,15 @@
       "state" : {
         "revision" : "8bd4fd128923cf5494fa726839af8afe12908ad9",
         "version" : "6.5.0"
+      }
+    },
+    {
+      "identity" : "swift-numerics",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-numerics.git",
+      "state" : {
+        "revision" : "0a5bc04095a675662cf24757cc0640aa2204253b",
+        "version" : "1.0.2"
       }
     }
   ],
