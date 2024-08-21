@@ -71,7 +71,6 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
                 print("Error fetching weather data: \(error)")
                 return
             }
-            
             guard let data = data else { return }
             
             do {
@@ -100,6 +99,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         cityLabel.text = city
     }
 }
+
 
 //import UIKit
 //import SideMenu
