@@ -1,5 +1,5 @@
 import UIKit
-/*
+
 class WeatherTableViewCell: UITableViewCell {
 
     @IBOutlet weak var weatherImageView: UIImageView!
@@ -21,4 +21,4 @@ class WeatherTableViewCell: UITableViewCell {
     }
 
 }
-*/
+

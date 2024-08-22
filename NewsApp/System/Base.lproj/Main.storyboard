@@ -168,31 +168,16 @@
                     <view key="view" contentMode="scaleToFill" id="fgQ-y1-ebE" customClass="WeatherTableViewCell" customModule="NewsApp" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="PMb-SG-hF1">
-                                <rect key="frame" x="0.0" y="144" width="414" height="752"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </tableView>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="XC2-w7-bv8"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="PMb-SG-hF1" firstAttribute="top" secondItem="XC2-w7-bv8" secondAttribute="top" id="06S-5w-qx0"/>
-                            <constraint firstAttribute="bottom" secondItem="PMb-SG-hF1" secondAttribute="bottom" id="CJl-UI-cCb"/>
-                            <constraint firstItem="PMb-SG-hF1" firstAttribute="leading" secondItem="XC2-w7-bv8" secondAttribute="leading" id="NMJ-TP-snl"/>
-                            <constraint firstItem="PMb-SG-hF1" firstAttribute="trailing" secondItem="XC2-w7-bv8" secondAttribute="trailing" id="OTM-fS-9R4"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ghX-SP-O0U">
                         <barButtonItem key="leftBarButtonItem" title="Item" image="line.horizontal.3" catalog="system" id="v8M-4h-Y1D">
                             <connections>
-                                <action selector="didWeather:" destination="DkJ-ck-e8l" id="bFF-ML-JL8"/>
+                                <action selector="didWeather:" destination="DkJ-ck-e8l" id="UYW-Js-k3L"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <outlet property="table" destination="PMb-SG-hF1" id="2ce-9y-7ON"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GHj-g6-hyJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

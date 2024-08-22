@@ -1,6 +1,6 @@
 import UIKit
 
-class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+class SearchViewContr: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 
     private let tableView = UITableView()
     private let searchBar = UISearchBar()
@@ -61,7 +61,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     weatherDescription: weatherResponse.weather.first?.description.capitalized ?? "N/A",
                     humidity: weatherResponse.main.humidity,
                     windSpeed: weatherResponse.wind.speed,
-                    iconName: weatherResponse.weather.first?.icon ?? "01d"
+                    iconName: weatherResponse.weather.first?.icon ?? "01d", cityName: ""
                 )
                 self.weatherData = [model]
 

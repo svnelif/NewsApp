@@ -31,6 +31,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         tableView.delegate = self
         tableView.dataSource = self
+        
         setupMenu()
         
         fetchTopStories()
@@ -110,33 +111,30 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
         guard let text = searchBar.text, !text.isEmpty else {
             return
         }
-        
+
         // Klavyeyi kapat
         searchBar.resignFirstResponder()
-        
-        APICaller.shared.search(with: text) { [weak self] result in
-            switch result {
-            case .success(let articles):
-                print("Dönen Articles: \(articles)")
-                
-                self?.articles = articles
-                self?.viewModels = articles.compactMap { article in
-                    NewsTableViewCellViewModel(
-                        title: article.name,
-                        subtitle: article.description,
-                        imageURL: URL(string: article.image)
-                    )
-                }
-                DispatchQueue.main.async {
-                    self?.tableView.reloadData()
-                }
-            case .failure(let error):
-                print("API arama hatası: \(error.localizedDescription)")
-            }
+
+        // `articles` dizisinde arama yap
+        let filteredArticles = articles.filter { article in
+            return article.name.lowercased().contains(text.lowercased()) ||
+                   article.description.lowercased().contains(text.lowercased())
+        }
+
+        // Arama sonuçlarını `viewModels` içine aktar
+        self.viewModels = filteredArticles.compactMap { article in
+            NewsTableViewCellViewModel(
+                title: article.name,
+                subtitle: article.description,
+                imageURL: URL(string: article.image)
+            )
+        }
+
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
         }
     }
 
