@@ -14,7 +14,6 @@ class WeatherViewController: UIViewController, UITableViewDelegate, UITableViewD
         return searchBar
     }()
         
-       
     private let placeholderLabel: UILabel = {
         let label = UILabel()
         label.text = "Please enter city name.".localized
