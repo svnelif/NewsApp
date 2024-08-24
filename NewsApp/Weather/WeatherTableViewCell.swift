@@ -22,12 +22,6 @@ class WeatherTableViewCell: UITableViewCell {
         return label
     }()
 
-    private let weatherIconImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        return imageView
-    }()
-
     private let temperatureLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 60, weight: .bold)
@@ -74,7 +68,6 @@ class WeatherTableViewCell: UITableViewCell {
     // MARK: - Setup UI
     private func setupUI() {
         contentView.addSubview(dateLabel)
-        contentView.addSubview(weatherIconImageView)
         contentView.addSubview(temperatureLabel)
         contentView.addSubview(descriptionLabel)
         contentView.addSubview(humidityLabel)
@@ -83,7 +76,6 @@ class WeatherTableViewCell: UITableViewCell {
         
         // Layout constraints
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
-        weatherIconImageView.translatesAutoresizingMaskIntoConstraints = false
         temperatureLabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         humidityLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -95,12 +87,7 @@ class WeatherTableViewCell: UITableViewCell {
             cityNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             cityNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
 
-            weatherIconImageView.topAnchor.constraint(equalTo: cityNameLabel.bottomAnchor, constant: 16),
-            weatherIconImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            weatherIconImageView.widthAnchor.constraint(equalToConstant: 100),
-            weatherIconImageView.heightAnchor.constraint(equalToConstant: 100),
-            
-            temperatureLabel.topAnchor.constraint(equalTo: weatherIconImageView.bottomAnchor, constant: 16),
+            temperatureLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 16),
             temperatureLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             
             descriptionLabel.topAnchor.constraint(equalTo: temperatureLabel.bottomAnchor, constant: 8),
@@ -124,9 +111,6 @@ class WeatherTableViewCell: UITableViewCell {
         temperatureLabel.text = model.temperature
         descriptionLabel.text = model.weatherDescription
         humidityLabel.text = "Humidity".localized + ": \(model.humidity)%"
-        windSpeedLabel.text = "Wind: \(model.windSpeed) m/s".localized
-        weatherIconImageView.image = UIImage(named: model.iconName)
+        windSpeedLabel.text = "Wind".localized + ": \(model.windSpeed) m/s"
     }
-
-
 }

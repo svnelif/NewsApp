@@ -9,7 +9,7 @@ class WeatherViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     private let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
-        searchBar.placeholder = "Enter city name".localized
+        searchBar.placeholder = "Enter city or district name".localized
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         return searchBar
     }()
@@ -38,8 +38,19 @@ class WeatherViewController: UIViewController, UITableViewDelegate, UITableViewD
         setupConstraints()
         setupTableView()
         
+        // Dil değişikliği bildirimi için gözlemci ekle
+        NotificationCenter.default.addObserver(self, selector: #selector(languageChanged), name: NSNotification.Name("LanguageChanged"), object: nil)
+            
         // Başlangıçta belirli bir şehir için hava durumu verilerini al
         fetchWeather(for: "Ankara")
+    }
+
+    @objc private func languageChanged() {
+        // Dil değiştiğinde başlığı, placeholder metnini ve tabloyu güncelle
+        self.title = "Weather".localized
+        searchBar.placeholder = "Enter city or district name".localized
+        placeholderLabel.text = "Please enter city name.".localized
+        tableView.reloadData()
     }
 
     private func setupConstraints() {
@@ -74,6 +85,7 @@ class WeatherViewController: UIViewController, UITableViewDelegate, UITableViewD
         tableView.dataSource = self
         tableView.register(WeatherTableViewCell.self, forCellReuseIdentifier: "WeatherTableViewCell")
     }
+
     private func fetchWeather(for cityName: String) {
         let urlString = "https://api.openweathermap.org/data/2.5/weather?q=\(cityName)&units=metric&appid=62836853957d7ca33cd5bb5d8436b269"
         guard let url = URL(string: urlString) else { return }
@@ -93,7 +105,7 @@ class WeatherViewController: UIViewController, UITableViewDelegate, UITableViewD
                 let weatherResponse = try JSONDecoder().decode(WeatherResponse.self, from: data)
                 
                 // Kullanıcının dil tercihine göre 'language' değişkenini ayarla
-                let language = "en" // Bu değeri kullanıcı tercihine göre dinamik olarak ayarlayabilirsiniz
+                let language = UserDefaults.standard.string(forKey: "appLanguage") ?? "en"
 
                 let model = WeatherViewModel(
                     date: self.convertUnixToDate(unixTime: weatherResponse.dt, language: language),
@@ -116,12 +128,14 @@ class WeatherViewController: UIViewController, UITableViewDelegate, UITableViewD
         task.resume()
     }
 
-    private func convertUnixToDate(unixTime: Int, language: String) -> String {
+    func convertUnixToDate(unixTime: Int, language: String? = nil) -> String {
         let date = Date(timeIntervalSince1970: TimeInterval(unixTime))
         let dateFormatter = DateFormatter()
-
-        // Dil seçimine göre yerel ayar belirle
-        switch language.lowercased() {
+        
+        // Seçilen dili al
+        let selectedLanguage = language ?? UserDefaults.standard.string(forKey: "appLanguage") ?? "en"
+        
+        switch selectedLanguage.lowercased() {
         case "tr":
             dateFormatter.locale = Locale(identifier: "tr")
         default:
@@ -132,6 +146,13 @@ class WeatherViewController: UIViewController, UITableViewDelegate, UITableViewD
         return dateFormatter.string(from: date)
     }
 
+    func updateForSelectedLanguage() {
+        self.title = "Weather".localized
+        searchBar.placeholder = "Enter city or district name".localized
+        placeholderLabel.text = "Please enter city name.".localized
+        tableView.reloadData()
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return weatherData.count
     }
@@ -170,7 +191,7 @@ class WeatherViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
 
     private func setupMenu() {
-        var menuItem = MenuListController(with: SideMenuItem.allCases)
+        let menuItem = MenuListController(with: SideMenuItem.allCases)
         menu = SideMenuNavigationController(rootViewController: menuItem)
         
         menuItem.delegate = self
@@ -180,5 +201,3 @@ class WeatherViewController: UIViewController, UITableViewDelegate, UITableViewD
         SideMenuManager.default.addPanGestureToPresent(toView: self.view)
     }
 }
-
-

@@ -1,4 +1,5 @@
 import UIKit
+
 class SettingsViewController: UIViewController {
 
     private let chooseLanguageLabel: UILabel = {
@@ -80,20 +81,29 @@ class SettingsViewController: UIViewController {
     @objc private func toggleLanguage(_ sender: UISwitch) {
         if sender == englishSwitch && sender.isOn {
             turkishSwitch.setOn(false, animated: true)
-            LocalizationManager.shared.setLanguage(languageCode: "en")
+            changeLanguage(to: "en")
         } else if sender == turkishSwitch && sender.isOn {
             englishSwitch.setOn(false, animated: true)
-            LocalizationManager.shared.setLanguage(languageCode: "tr")
+            changeLanguage(to: "tr")
         }
+        
+        // Dil değişikliğini `WeatherViewController`'a gönder
+        if let weatherVC = navigationController?.viewControllers.first(where: { $0 is WeatherViewController }) as? WeatherViewController {
+            weatherVC.updateForSelectedLanguage()
+            navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    private func changeLanguage(to language: String) {
+        LocalizationManager.shared.setLanguage(languageCode: language)
+        NotificationCenter.default.post(name: NSNotification.Name("LanguageChanged"), object: nil)
         updateLanguage()
     }
     
     private func updateLanguage() {
-        // Uygulamanın root view controller'ını değiştirerek UI'yi yeni dil ile güncelleyin
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let initialViewController = storyboard.instantiateInitialViewController()
         
-        // Doğru pencerenin güncellendiğinden emin olun
         if let window = UIApplication.shared.windows.first {
             window.rootViewController = initialViewController
             window.makeKeyAndVisible()

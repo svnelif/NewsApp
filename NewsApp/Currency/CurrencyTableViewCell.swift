@@ -1,23 +1,49 @@
-//
-//  CurrencyTableViewCell.swift
-//  NewsApp
-//
-//  Created by Elif Ataseven  on 24.08.2024.
-//
-
 import UIKit
 
 class CurrencyTableViewCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    static let identifier = "CurrencyTableViewCell"
+    
+    private let currencyLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.textColor = .black
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let valueLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textColor = .gray
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        contentView.addSubview(currencyLabel)
+        contentView.addSubview(valueLabel)
+        setupConstraints()
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-
+    
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
+            currencyLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            currencyLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            
+            valueLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            valueLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            valueLabel.leadingAnchor.constraint(equalTo: currencyLabel.trailingAnchor, constant: 8)
+        ])
+    }
+    
+    func configure(with currency: String, value: Double) {
+        currencyLabel.text = currency
+        valueLabel.text = String(format: "%.2f", value)
+    }
 }

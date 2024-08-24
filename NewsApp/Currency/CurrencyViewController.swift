@@ -64,7 +64,7 @@ class CurrencyViewController: UIViewController, MenuListControllerDelegate {
         getRatesButton.layer.shadowRadius = 6
         
         labell.text = "For one euro currency.".localized
-        labell.textAlignment = .center
+        labell.textAlignment = .left
         // Add button to the view hierarchy
         view.addSubview(getRatesButton)
         getRatesButton.translatesAutoresizingMaskIntoConstraints = false
