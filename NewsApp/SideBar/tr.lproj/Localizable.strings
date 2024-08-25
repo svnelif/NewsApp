@@ -11,6 +11,9 @@
 "OK" = "Tamam";
 "Error!" = "Hata!";
 "Search" = "Arayın";
+"Home Page" = "Anasayfa";
+"Settings" = "Ayarlar";
+//Hava Durumu
 "Weather" = "Hava Durumu";
 "Humidity" = "Nem Oranı";
 "Wind" = "Rüzgar";
