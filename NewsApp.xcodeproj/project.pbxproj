@@ -44,6 +44,7 @@
 		67C26A972C7BCF440096126C /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 67C26A962C7BCF440096126C /* FirebaseStorage */; };
 		67C26A992C7BCF440096126C /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 67C26A982C7BCF440096126C /* FirebaseStorageCombine-Community */; };
 		67C26A9B2C7BCF440096126C /* FirebaseVertexAI-Preview in Frameworks */ = {isa = PBXBuildFile; productRef = 67C26A9A2C7BCF440096126C /* FirebaseVertexAI-Preview */; };
+		67C26A9E2C7BD2610096126C /* PharmacyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C26A9D2C7BD2610096126C /* PharmacyViewController.swift */; };
 		67C2EE452C5F8D9E00E6FC6D /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C2EE442C5F8D9E00E6FC6D /* NewsTableViewCell.swift */; };
 		67C2EE472C5F8DA900E6FC6D /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C2EE462C5F8DA900E6FC6D /* APICaller.swift */; };
 		67C2EE7C2C5FFDAC00E6FC6D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C2EE7B2C5FFDAC00E6FC6D /* ViewController.swift */; };
@@ -72,6 +73,7 @@
 		67C26A4D2C7B89870096126C /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		67C26A4F2C7B89C90096126C /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		67C26A6B2C7BA1510096126C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		67C26A9D2C7BD2610096126C /* PharmacyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PharmacyViewController.swift; sourceTree = "<group>"; };
 		67C2EE442C5F8D9E00E6FC6D /* NewsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
 		67C2EE462C5F8DA900E6FC6D /* APICaller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
 		67C2EE7B2C5FFDAC00E6FC6D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -186,8 +188,9 @@
 			children = (
 				67C26A482C7B793C0096126C /* MenuViewController.swift */,
 				67DA80C02C642AB700B116AD /* News */,
-				67967F022C6B3C13006A80A3 /* Currency */,
 				67967F052C6B99BB006A80A3 /* Weather */,
+				67C26A9C2C7BD2270096126C /* Pharmacy */,
+				67967F022C6B3C13006A80A3 /* Currency */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -200,6 +203,14 @@
 				67C26A4F2C7B89C90096126C /* LogInViewController.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		67C26A9C2C7BD2270096126C /* Pharmacy */ = {
+			isa = PBXGroup;
+			children = (
+				67C26A9D2C7BD2610096126C /* PharmacyViewController.swift */,
+			);
+			path = Pharmacy;
 			sourceTree = "<group>";
 		};
 		67DA80BF2C642A7600B116AD /* SideBar */ = {
@@ -344,6 +355,7 @@
 				67C26A502C7B89C90096126C /* LogInViewController.swift in Sources */,
 				67C2EE452C5F8D9E00E6FC6D /* NewsTableViewCell.swift in Sources */,
 				67C2EE472C5F8DA900E6FC6D /* APICaller.swift in Sources */,
+				67C26A9E2C7BD2610096126C /* PharmacyViewController.swift in Sources */,
 				67967F042C6B3C5E006A80A3 /* CurrencyViewController.swift in Sources */,
 				67C476E12C60F74C00CF22D7 /* MenuListController.swift in Sources */,
 				67C26A4C2C7B7C600096126C /* SettingsViewController.swift in Sources */,

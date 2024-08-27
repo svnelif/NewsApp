@@ -5,8 +5,8 @@ import FirebaseAuth
 class LogInViewController: UIViewController {
 
     
-    @IBOutlet weak var emailText: UITextField!
-    @IBOutlet weak var passwordText: UITextField!
+    @IBOutlet weak var emailTextL: UITextField!
+    @IBOutlet weak var passwordTextL: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -14,12 +14,12 @@ class LogInViewController: UIViewController {
     }
 
     @IBAction func loginClicked(_ sender: Any) {
-        if emailText.text != "" && passwordText.text != "" {
-            Auth.auth().signIn(withEmail: emailText.text!, password: passwordText.text!) { authdata, error in
+        if emailTextL.text != "" && passwordTextL.text != "" {
+            Auth.auth().signIn(withEmail: emailTextL.text!, password: passwordTextL.text!) { authdata, error in
                 if error != nil{
                     self.makeAlert(titleInput: "Error!", messageInput: error?.localizedDescription ?? "Error!")
                 }else{
-                    self.performSegue(withIdentifier: "toFeedVC", sender: nil)
+                    self.performSegue(withIdentifier: "toMenuVC", sender: nil)
                 }
             }
         }else{

@@ -8,6 +8,8 @@ class MenuViewController: UIViewController, MenuListControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.title = "Menu Page"
+        
         setupMenu()
         tabBarController?.tabBar.items?[0].title = "Home Page".localized
         tabBarController?.tabBar.items?[1].title = "Settings".localized

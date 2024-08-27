@@ -4,9 +4,9 @@ import FirebaseAuth
 
 class SignUpViewController: UIViewController {
 
-    @IBOutlet weak var emailTextS: UITextField!
-    @IBOutlet weak var passwordTextS: UITextField!
-    @IBOutlet weak var passwordTextS2: UITextField!
+    @IBOutlet weak var emailTextSu: UITextField!
+    @IBOutlet weak var passwordTextSu: UITextField!
+    @IBOutlet weak var passwordTextSu2: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,13 +16,13 @@ class SignUpViewController: UIViewController {
     
     @IBAction func SignUpS(_ sender: Any) {
         
-        if emailTextS.text != "" && passwordTextS.text != "" {
-            if passwordTextS.text == passwordTextS2.text {
-                Auth.auth().createUser(withEmail: emailTextS.text!, password: passwordTextS.text!) { authdata, error in
+        if emailTextSu.text != "" && passwordTextSu.text != "" {
+            if passwordTextSu.text == passwordTextSu2.text {
+                Auth.auth().createUser(withEmail: emailTextSu.text!, password: passwordTextSu.text!) { authdata, error in
                     if error != nil{
                         self.makeAlert(titleInput: "Error!", messageInput: error?.localizedDescription ?? "Error!")
                     }else{
-                        self.performSegue(withIdentifier: "toFeedVC", sender: nil)
+                        self.performSegue(withIdentifier: "toMenuVC", sender: nil)
                     }
                 }
             }else{
@@ -34,6 +34,10 @@ class SignUpViewController: UIViewController {
         
     }
     
+    
+    @IBAction func LogInS(_ sender: Any) {
+        performSegue(withIdentifier: "toLogInVC", sender: nil)
+    }
     
     func makeAlert(titleInput:String, messageInput:String){
         let alert = UIAlertController(title: titleInput, message: messageInput, preferredStyle: UIAlertController.Style.alert)
