@@ -1,5 +1,5 @@
 //
-//  CurrencyTableViewCell.swift
+//  PharmacyTableViewCell.swift
 //  NewsApp
 //
 //  Created by Elif Ataseven  on 28.08.2024.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CurrencyTableViewCell: UITableViewCell {
+class PharmacyTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
