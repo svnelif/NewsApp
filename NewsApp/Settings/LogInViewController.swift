@@ -4,41 +4,43 @@ import FirebaseAuth
 
 class LogInViewController: UIViewController {
 
-    
     @IBOutlet weak var emailTextL: UITextField!
     @IBOutlet weak var passwordTextL: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        // Ekstra ayarları burada yapabilirsiniz.
     }
 
     @IBAction func loginClicked(_ sender: Any) {
-        if emailTextL.text != "" && passwordTextL.text != "" {
-            Auth.auth().signIn(withEmail: emailTextL.text!, password: passwordTextL.text!) { authdata, error in
-                if error != nil{
-                    self.makeAlert(titleInput: "Error!", messageInput: error?.localizedDescription ?? "Error!")
-                }else{
-                    self.performSegue(withIdentifier: "toMenuVC", sender: nil)
-                }
+        // Text field'ların boş olup olmadığını kontrol et
+        guard let email = emailTextL.text, !email.isEmpty,
+              let password = passwordTextL.text, !password.isEmpty else {
+            makeAlert(titleInput: "Error!".localized, messageInput: "No username or password entered.".localized)
+            return
+        }
+        
+        // Firebase Auth ile giriş yap
+        Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
+            if let error = error {
+                // Hata varsa alert göster
+                self?.makeAlert(titleInput: "Error!".localized, messageInput: error.localizedDescription)
+            } else {
+                // Başarılı girişte segue yap
+                self?.performSegue(withIdentifier: "toMenuVC", sender: nil)
             }
-        }else{
-            makeAlert(titleInput: "Error!", messageInput: "No username or password entered.")
         }
     }
     
-    
     @IBAction func signupClicked(_ sender: Any) {
+        // Sign Up sayfasına geçiş yap
         performSegue(withIdentifier: "toSignUpVC", sender: nil)
     }
     
-    
-    func makeAlert(titleInput:String, messageInput:String){
-        let alert = UIAlertController(title: titleInput, message: messageInput, preferredStyle: UIAlertController.Style.alert)
-        let okButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel)
+    func makeAlert(titleInput: String, messageInput: String) {
+        let alert = UIAlertController(title: titleInput, message: messageInput, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "OK".localized, style: .cancel)
         alert.addAction(okButton)
-        self.present(alert, animated: true)
+        present(alert, animated: true, completion: nil)
     }
-    
 }
-

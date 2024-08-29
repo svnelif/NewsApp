@@ -15,12 +15,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         //KULLANNICININ APP ACILINCA HESABI ACIIK OLSUN DİYE
         let currentUser = Auth.auth().currentUser
-        if currentUser != nil {
-            let board = UIStoryboard(name: "Main", bundle: nil)
-            let tabBar = board.instantiateViewController(identifier: "tabBar") as! UITabBarController
-            window?.rootViewController = tabBar
-        }
-        
+//        if currentUser != nil {
+//            let board = UIStoryboard(name: "Main", bundle: nil)
+//            let tabBar = board.instantiateViewController(identifier: "toMenuVC") as! UITabBarController
+//            window?.rootViewController = tabBar
+//        }
+//        
         
         guard let _ = (scene as? UIWindowScene) else { return }
     }

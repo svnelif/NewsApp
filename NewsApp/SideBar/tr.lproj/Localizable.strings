@@ -54,3 +54,17 @@
 "Humid" = "Nemli";
 "Breezy" = "Hafif Rüzgarlı";
 "Storm" = "Fırtına";
+//Menu
+"News" = "Haberler";
+"Weather" = "Hava Durumu";
+"Pharmacy on Duty" = "Nöbetçi Eczane";
+"Currency" = "Döviz";
+//Login
+"No username or password entered." = "Kullanıcı adı veya şifre girilmedi.";
+"Error!" = "Hata!";
+"Passwords are not the same." = "Şifreler aynı değildir.";
+"Dont't have an account?" = "Hesabın yok mu ?";
+"Do you have an account?" = "Hesabın var mı ?";
+"Log in" = "Giriş yap";
+"Sign up" = "Kayıt ol";
+"OR" = "Ya da";

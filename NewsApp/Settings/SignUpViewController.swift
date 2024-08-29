@@ -26,10 +26,10 @@ class SignUpViewController: UIViewController {
                     }
                 }
             }else{
-                makeAlert(titleInput: "Error!", messageInput: "Passwords are not the same.")
+                makeAlert(titleInput: "Error!", messageInput: "Passwords are not the same.".localized)
             }
         }else{
-            makeAlert(titleInput: "Error!", messageInput: "No username or password entered.")
+            makeAlert(titleInput: "Error!", messageInput: "No username or password entered.".localized)
         }
         
     }
